@@ -42,16 +42,17 @@ class Kaart {
 public:
 	Kaart(Number number, Symbol symbol, Colour colour) : m_value(number), m_symbol(symbol), m_kleur(colour) {}
 	~Kaart() {};
+	Kaart(const Kaart& other);
 	friend std::ostream& operator<<(std::ostream& os, const Kaart& kaart);
 	bool operator==(const Kaart& other) const;
 	bool operator!=(const Kaart& other) const;
 	bool operator>(const Kaart& other) const;
 	bool operator<(const Kaart& other) const;
-	Kaart operator=(const Kaart& other);
+	Kaart& operator=(const Kaart& other);
 	static const std::vector<std::string> unicode_chars;
 	const int getValue() const;
 	bool cardOnTop() const;
-	Kaart& getCardOnTop() const;
+	Kaart getCardOnTop() const;
 };
 
 // List of cards
@@ -67,6 +68,7 @@ public:
 
 	const int calculateValue() const;
 
+	Deck& operator=(const Deck& other);
 	bool operator==(const Deck& other) const;
 	bool operator!=(const Deck& other) const;
 	bool operator>(const Deck& other) const;
@@ -77,6 +79,6 @@ public:
 	const Kaart & peekLast();
 	const Kaart & popFirst();
 	const Kaart & popLast();
-	const Deck& popNLast(int number_of_cards = 1);
-	const Deck& popNFirst(int number_of_cards = 1);
+	const Deck& popNLast(int number_of_cards);
+	const Deck& popNFirst(int number_of_cards);
 };

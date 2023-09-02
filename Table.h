@@ -1,7 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
-#include "Kaarten.h"
+#include "Kaart.h"
 #include <vector>
 #include "Player.h"
 #include <iostream>

@@ -18,13 +18,14 @@ Player::Player(const string& m_name, const Deck& m_cards) {
 /*
 * returns a deck of the first n cards of the player (also consume them)
 */
-Player::const Deck& layNFirstCards(const int n = 1){
+const Deck& Player::layNFirstCards(const int n)
+{
 	return m_cards.popNFirst(n);
 }
 
 /*
 * returns a deck of the last n cards of the player (also consume them)
 */
-Player::const Deck& layNLastCards(const int n = 1) {
+const Deck& Player::layNLastCards(const int n) {
 	return m_cards.popNLast(n);
 }
