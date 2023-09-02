@@ -2,6 +2,7 @@
 
 const std::vector<std::string> Kaart::unicode_chars{ "♠", "♥", "♣", "◆" };
 
+
 // Copy constructor definition
 Kaart::Kaart(const Kaart& other)
 	: m_value(other.m_value), m_symbol(other.m_symbol), m_kleur(other.m_kleur) {
@@ -36,7 +37,9 @@ Kaart& Kaart::operator=(const Kaart& other) {
 * print a card to the output stream
 */
 std::ostream& operator<<(std::ostream& os, const Kaart& kaart) {
-	os << Kaart::unicode_chars[kaart.m_symbol] << kaart.m_kleur;
+	const std::vector<std::string> symbool{ "Spades","Hearts","Clubs","Diamonds"};
+	const std::vector<std::string> nummer{"ACE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN","JACK","QUEEN","KING"};
+	os << symbool[kaart.m_symbol] << " " << nummer[kaart.m_value-1];
 	return os;
 }
 
