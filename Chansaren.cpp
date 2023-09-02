@@ -2,11 +2,11 @@
 //
 
 #include "Chansaren.h"
+#include "Table.h"
 
 using namespace std;
 
-int main()
-{
-	cout << "Hello CMake." << endl;
+int main(){
+	Table table;
 	return 0;
 }

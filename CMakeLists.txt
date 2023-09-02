@@ -12,7 +12,7 @@ endif()
 project ("Chansaren")
 
 # Add source to this project's executable.
-add_executable (Chansaren "Chansaren.cpp" "Chansaren.h")
+add_executable (Chansaren "Chansaren.cpp" "Chansaren.h" "Kaarten.h" "Kaarten.cpp" "Table.h" "Table.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET Chansaren PROPERTY CXX_STANDARD 20)
