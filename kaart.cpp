@@ -203,7 +203,7 @@ const Deck& Deck::popNFirst(int number_of_cards = 1) {
 /*
 * create n decks of shuffeld cards (n decks means n*52 cards)
 */
-Deck& Deck::full(int number_of_decks = 1) {
+void Deck::full(Deck* fullDeck, int number_of_decks = 1) {
 	std::vector<Kaart> fullDeckVector;
 	for (int decks = 0; decks < number_of_decks; decks++) {
 		for (int symbols = 0; symbols < 4; symbols++) {
@@ -215,11 +215,9 @@ Deck& Deck::full(int number_of_decks = 1) {
 	}
 	auto rng = std::default_random_engine{};
 	std::shuffle(std::begin(fullDeckVector), std::end(fullDeckVector), rng);
-	Deck fullDeck;
 	for (int i = 0; i < fullDeckVector.size(); i++) {
-		fullDeck.addCard(fullDeckVector[i]);
+		fullDeck->addCard(fullDeckVector[i]);
 	}
-	return fullDeck;
 }
 
 /*

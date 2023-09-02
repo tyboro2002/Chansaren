@@ -34,7 +34,8 @@ Table::Table() {
 		}
 	}
 
-	Deck& fullDeck = Deck::full(number_of_decks);
+	Deck fullDeck;
+	Deck::full(&fullDeck, number_of_decks);
 	for (int i = 0; i < 52; i++) {
 		std::cout << fullDeck.peekCardAtIndex(i) << std::endl;
 	}
