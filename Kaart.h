@@ -38,9 +38,10 @@ class Kaart {
 	Number m_value;
 	Symbol m_symbol;
 	Colour m_kleur;
-	std::optional<Kaart> m_on_top;
+	//std::optional<Kaart> m_on_top;
+	Kaart* m_on_top;
 public:
-	Kaart(Number number, Symbol symbol, Colour colour) : m_value(number), m_symbol(symbol), m_kleur(colour) {}
+	Kaart(Number number, Symbol symbol, Colour colour) : m_value(number), m_symbol(symbol), m_kleur(colour), m_on_top(nullptr) {}
 	~Kaart() {};
 	Kaart(const Kaart& other);
 	friend std::ostream& operator<<(std::ostream& os, const Kaart& kaart);

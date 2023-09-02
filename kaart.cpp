@@ -5,10 +5,10 @@ const std::vector<std::string> Kaart::unicode_chars{ "♠", "♥", "♣", "◆" 
 // Copy constructor definition
 Kaart::Kaart(const Kaart& other)
 	: m_value(other.m_value), m_symbol(other.m_symbol), m_kleur(other.m_kleur) {
-	if (other.m_on_top.has_value()) {
-		// If 'other' has a card on top, copy it to 'this'
-		m_on_top = other.m_on_top.value();
-	}
+	//if (other.m_on_top.has_value()) {
+	//	// If 'other' has a card on top, copy it to 'this'
+	//	m_on_top = other.m_on_top.value();
+	//}
 }
 
 // Assignment operator overload
@@ -21,13 +21,13 @@ Kaart& Kaart::operator=(const Kaart& other) {
     m_symbol = other.m_symbol;
     m_kleur = other.m_kleur;
 
-    if (other.m_on_top.has_value()) {
-        // If 'other' has a card on top, copy it to 'this'
-        m_on_top = other.m_on_top.value();
-    } else {
-        // If 'other' doesn't have a card on top, clear 'm_on_top' in 'this'
-        m_on_top.reset();
-    }
+   // if (other.m_on_top.has_value()) {
+   //     // If 'other' has a card on top, copy it to 'this'
+   //     m_on_top = other.m_on_top.value();
+   // } else {
+   //     // If 'other' doesn't have a card on top, clear 'm_on_top' in 'this'
+   //     m_on_top.reset();
+   // }
 
     return *this;
 }
@@ -76,12 +76,14 @@ const int Kaart::getValue() const {
 }
 
 bool Kaart::cardOnTop() const {
-	return m_on_top.has_value();
+	return m_on_top != nullptr;
+	//return m_on_top.has_value();
 }
 
 Kaart Kaart::getCardOnTop() const {
 	if (cardOnTop()) {
-		return m_on_top.value(); // Return a copy of the card on top
+		return *m_on_top;
+		//return m_on_top.value(); // Return a copy of the card on top
 	}
 	throw std::runtime_error("No card on top"); // Throw a descriptive exception
 }
