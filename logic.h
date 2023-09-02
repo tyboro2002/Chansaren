@@ -6,3 +6,4 @@
 bool checkOnlyAce(const Deck& deck);
 bool checkDoubleSeven(std::vector<Player> m_players);
 int getDoubleCount(const Deck& deck);
+bool checkAllConsecutive(const Deck& deck);

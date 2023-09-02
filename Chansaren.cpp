@@ -3,10 +3,31 @@
 
 #include "Chansaren.h"
 #include "Table.h"
+#include "logic.h"
 
 using namespace std;
 
 int main(){
+	Deck deck;
+	Kaart kaart = Kaart(ACE, Spades);
+	deck.addCard(kaart);
+	kaart = Kaart(TWO, Clubs);
+	deck.addCard(kaart);
+	kaart = Kaart(FIVE, Hearts);
+	deck.addCard(kaart);
+	kaart = Kaart(THREE, Spades);
+	deck.addCard(kaart);
+	kaart = Kaart(SIX, Spades);
+	deck.addCard(kaart);
+	//kaart = Kaart(FOUR, Diamonds);
+	//deck.addCard(kaart);
+	for (int i = 0; i < deck.numberOfCards(); i++) {
+		std::cout << deck.peekCardAtIndex(i) << std::endl;
+	}
+	cout << checkAllConsecutive(deck) << endl;
+	for (int i = 0; i < deck.numberOfCards(); i++) {
+		std::cout << deck.peekCardAtIndex(i) << std::endl;
+	}
 	Table table;
 	return 0;
 }

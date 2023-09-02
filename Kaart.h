@@ -41,6 +41,7 @@ class Kaart {
 	//std::optional<Kaart> m_on_top;
 	Kaart* m_on_top;
 public:
+	Kaart(Number number, Symbol symbol) : m_value(number), m_symbol(symbol), m_kleur((Colour)(symbol%2)), m_on_top(nullptr) {}
 	Kaart(Number number, Symbol symbol, Colour colour) : m_value(number), m_symbol(symbol), m_kleur(colour), m_on_top(nullptr) {}
 	~Kaart() {};
 	Kaart(const Kaart& other);
