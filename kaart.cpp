@@ -83,9 +83,9 @@ bool Kaart::cardOnTop() const {
 	//return m_on_top.has_value();
 }
 
-Kaart Kaart::getCardOnTop() const {
+Kaart* Kaart::getCardOnTop() const {
 	if (cardOnTop()) {
-		return *m_on_top;
+		return m_on_top;
 		//return m_on_top.value(); // Return a copy of the card on top
 	}
 	throw std::runtime_error("No card on top"); // Throw a descriptive exception
@@ -178,9 +178,9 @@ const int Deck::calculateValue() const{
 		int tempScore = card.getValue();
 		Kaart temp = card;
 		while (temp.cardOnTop()) {
-			tempScore *= temp.getCardOnTop().getValue();
-			if (temp.getCardOnTop().cardOnTop()) {
-				temp = temp.getCardOnTop();
+			tempScore *= temp.getCardOnTop()->getValue();
+			if (temp.getCardOnTop()->cardOnTop()) {
+				temp = *temp.getCardOnTop();
 			}
 		}
 		score += tempScore;

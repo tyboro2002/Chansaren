@@ -78,3 +78,19 @@ bool checkAllConsecutive(const Deck& deck) {
 	// If all values are consecutive, return true
 	return true;
 }
+
+int countJacks(const Deck& deck) {
+	int jacks = 0;
+	for (int i = 0; i < deck.numberOfCards(); i++) {
+		if (deck.peekCardAtIndex(i).getValue() == JACK) jacks++;
+	}
+	return jacks;
+}
+
+int countNotUsedTwo(const Deck& deck) {
+	int two = 0;
+	for (int i = 0; i < deck.numberOfCards(); i++) {
+		if (deck.peekCardAtIndex(i).getValue() == TWO && deck.peekCardAtIndex(i).getCardOnTop() == nullptr) two++;
+	}
+	return two;
+}

@@ -11,9 +11,9 @@ int main(){
 	Deck deck;
 	Kaart kaart = Kaart(ACE, Spades);
 	deck.addCard(kaart);
-	kaart = Kaart(TWO, Clubs);
+	kaart = Kaart(ACE, Clubs);
 	deck.addCard(kaart);
-	kaart = Kaart(FIVE, Hearts);
+	kaart = Kaart(SEVEN, Hearts);
 	deck.addCard(kaart);
 	kaart = Kaart(THREE, Spades);
 	deck.addCard(kaart);
@@ -24,7 +24,7 @@ int main(){
 	for (int i = 0; i < deck.numberOfCards(); i++) {
 		std::cout << deck.peekCardAtIndex(i) << std::endl;
 	}
-	cout << checkAllConsecutive(deck) << endl;
+	cout << deck.calculateValue() << endl;
 	for (int i = 0; i < deck.numberOfCards(); i++) {
 		std::cout << deck.peekCardAtIndex(i) << std::endl;
 	}
