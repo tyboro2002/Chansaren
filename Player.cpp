@@ -1,6 +1,12 @@
 #include "Player.h"
 
 /*
+* return the cards deck of the player
+*/
+Deck Player::getCards() {
+	return m_cards;
+}
+/*
 * create a player without cards
 */
 Player::Player(const string& m_name){

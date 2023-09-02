@@ -117,7 +117,7 @@ void Deck::mergeBack(const Deck& otherDeck) {
 /*
 * peek the card at the index (dont remove it)
 */
-const Kaart& Deck::peekCardAtIndex(const int index) {
+const Kaart& Deck::peekCardAtIndex(const int index) const{
 	return m_cards.at(index);
 }
 
@@ -160,6 +160,13 @@ Deck& Deck::operator=(const Deck& other) {
 	// Copy data members from 'other' to 'this'
 	m_cards = other.m_cards;
 	return *this;
+}
+
+/*
+* calculate the size of a deck
+*/
+const int Deck::numberOfCards() const {
+	return m_cards.size();
 }
 
 /*

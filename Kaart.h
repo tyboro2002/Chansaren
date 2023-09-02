@@ -67,6 +67,7 @@ public:
 	void addCard(const Kaart& card);
 	void mergeBack(const Deck& otherDeck);
 
+	const int numberOfCards() const;
 	const int calculateValue() const;
 
 	Deck& operator=(const Deck& other);
@@ -75,7 +76,7 @@ public:
 	bool operator>(const Deck& other) const;
 	bool operator<(const Deck& other) const;
 
-	const Kaart & peekCardAtIndex(const int index);
+	const Kaart & peekCardAtIndex(const int index) const;
 	const Kaart & peekFirst();
 	const Kaart & peekLast();
 	const Kaart & popFirst();
