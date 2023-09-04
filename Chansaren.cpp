@@ -30,8 +30,16 @@ int main(){
 		std::cout << deck.peekCardAtIndex(i) << std::endl;
 	}
 	*/
-	Table table;
+
+	
+	//Table table;
+	std::vector<string> names = {"tybo", "jarno"};
+	Table table = Table(names,1);
 	table.stepTable();
 	cout << table;
+	cout << endl;
+	for (Player player : table.getPlayers()) {
+		std::cout << player << endl;
+	}
 	return 0;
 }

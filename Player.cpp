@@ -23,6 +23,21 @@ std::ostream& operator<<(std::ostream& os, const Player& player) {
 Deck Player::getCards() {
 	return m_cards;
 }
+
+/*
+* return the name of the player
+*/
+std::string Player::getName() {
+	return m_name;
+}
+
+/*
+* clear all the cards from the player
+*/
+void Player::clearCards() {
+	m_cards = Deck();
+}
+
 /*
 * create a player without cards
 */
@@ -41,6 +56,7 @@ Player::Player(const string& m_name, const Deck& m_cards) {
 void Player::recieveCard(const Kaart& kaart) {
 	m_cards.addCard(kaart);
 }
+
 void Player::recieveDeck(const Deck& deck) {
 	for (int i = 0; i < deck.numberOfCards(); i++) {
 		m_cards.addCard(deck.peekCardAtIndex(i));

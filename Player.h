@@ -8,6 +8,8 @@ class Player {
 	Deck m_cards;
 public:
 	Deck getCards();
+	std::string getName();
+	void clearCards();
 	Player(const string& m_name);
 	Player(const string& m_name, const Deck& m_cards);
 	friend std::ostream& operator<<(std::ostream& os, const Player& player);

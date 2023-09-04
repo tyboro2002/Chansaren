@@ -105,6 +105,13 @@ void Deck::addCard(const Kaart& card) {
 }
 
 /*
+* clear all the cards from the deck
+*/
+void Deck::clearDeck() {
+	m_cards.clear();
+}
+
+/*
 * mergeBack 2 decks into 1 deck (merging in the first deck)
 */
 void Deck::mergeBack(const Deck& otherDeck) {

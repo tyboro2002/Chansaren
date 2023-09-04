@@ -67,6 +67,7 @@ public:
 	Deck(Deck&& other) : m_cards(std::move(other.m_cards)) {}
 	static void full(Deck* fullDeck, int number_of_decks);
 	void addCard(const Kaart& card);
+	void clearDeck();
 	void mergeBack(const Deck& otherDeck);
 
 	const int numberOfCards() const;

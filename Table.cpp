@@ -1,5 +1,9 @@
 #include "Table.h"
 
+std::vector<Player> Table::getPlayers() {
+	return m_players;
+}
+
 Table::Table() {
 	int number_of_players;
 	std::cout << "Enter number of participants: ";
@@ -59,15 +63,40 @@ Table::Table() {
 	for (int i = 0; i < number_of_players; i++) {
 		m_players.at(i).recieveDeck(decks.at(i));
 	}
+	/*
 	for (Player player : m_players) {
 		std::cout << player << endl;
 	}
+	*/
 	/*
 	for (int i = 0; i < 52; i++) {
 		std::cout << fullDeck.peekCardAtIndex(i) << std::endl;
 	}
 	*/
 }
+
+
+Table::Table(std::vector<string> names, const int number_of_decks = 1) {
+	m_playerCount = names.size();
+	for (string str : names) {
+		Player speler = Player(str);
+		m_players.push_back(speler);
+		m_onTheTable.push_back(speler); //TODO test if this is posible or other player needs to be maked
+	}
+	Deck fullDeck;
+	Deck::full(&fullDeck, number_of_decks);
+	std::vector<Deck> decks(m_playerCount);
+	fullDeck.splitDeckIntoNDecks(&decks);
+	for (int i = 0; i < m_playerCount; i++) {
+		m_players.at(i).recieveDeck(decks.at(i));
+	}
+	/*
+	for (Player player : m_players) {
+		std::cout << player << endl;
+	}
+	*/
+}
+
 
 /*
 * print a table to the outputstream
@@ -98,4 +127,60 @@ void Table::stepTable() {
 		m_players.at(i).layNFirstCards(tempDeck, numberOfCards);
 		m_onTheTable.at(i).recieveDeck(tempDeck);
 	}
+
+	checkRules();
+
+	vector<int> winnerIndexes = checkWinner();
+
+	if (winnerIndexes.size() == 1) {
+		int winnerIndex = winnerIndexes.at(0);
+		Deck collected;
+		for (int i = 0; i < m_playerCount; i++) {
+			collected.mergeBack(m_onTheTable.at(i).getCards());
+		}
+		m_players.at(winnerIndex).recieveDeck(collected);
+		for (int i = 2; i < m_playerCount; i++) {
+			m_onTheTable.at(i).clearCards();
+		}
+	}
+	else {
+		cout << "a draw occured between players: " << endl;
+		for (int index : winnerIndexes) {
+			cout << "player: " << m_players.at(index).getName() << endl;
+		}
+	}
+	
+}
+
+/*
+* check the rules and ask and aply them until nothing more needed
+*/
+void Table::checkRules() {
+	//TODO
+}
+
+
+/*
+* checks the index of the winning player(s)
+*/
+const vector<int> Table::checkWinner() {
+	// TODO check for special winning rules
+
+	int winnerIndex = 0;
+	int winnerValue = 0;
+	for (int i = 0; i < m_playerCount; i++) {
+		int curVal = m_onTheTable.at(i).getCards().calculateValue();
+		if (curVal > winnerValue) {
+			winnerValue = curVal;
+			winnerIndex = i;
+		}
+	}
+	vector<int> winnerVector;
+	for (int i = 0; i < m_playerCount; i++) {
+		int curVal = m_onTheTable.at(i).getCards().calculateValue();
+		if (curVal == winnerValue) {
+			winnerVector.push_back(i);
+		}
+	}
+	return winnerVector;
 }
