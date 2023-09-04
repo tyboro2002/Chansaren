@@ -11,6 +11,8 @@ Table::Table() {
 		std::cout << "Enter number of participants: ";
 		std::cout.flush();
 	}
+
+	m_playerCount = number_of_players;
 	int min_number_of_decks = 1;
 	while (min_number_of_decks * 52 == 0) {
 		min_number_of_decks++;
@@ -36,7 +38,31 @@ Table::Table() {
 
 	Deck fullDeck;
 	Deck::full(&fullDeck, number_of_decks);
+
+	std::string playerName;
+	while (m_players.size() < number_of_players) {
+		std::cout << "Enter name of player " << m_players.size() + 1 << ": ";
+		while (!(std::cin >> playerName)) {
+			std::cin.clear();
+			std::cin >> std::ws;
+			std::cout << "Enter a valid name!" << std::endl;
+			std::cout << "Enter name of player " << m_players.size() + 1 << ": ";
+			std::cout.flush();
+		}
+		Player speler = Player(playerName);
+		m_players.push_back(speler);
+	}
+	std::vector<Deck> decks(number_of_players);
+	fullDeck.splitDeckIntoNDecks(&decks);
+	for (int i = 0; i < number_of_players; i++) {
+		m_players.at(i).recieveDeck(decks.at(i));
+	}
+	for (Player player : m_players) {
+		std::cout << player << endl;
+	}
+	/*
 	for (int i = 0; i < 52; i++) {
 		std::cout << fullDeck.peekCardAtIndex(i) << std::endl;
 	}
+	*/
 }

@@ -8,6 +8,7 @@
 using namespace std;
 
 int main(){
+	/*
 	Deck deck;
 	Kaart kaart = Kaart(ACE, Spades);
 	deck.addCard(kaart);
@@ -28,6 +29,7 @@ int main(){
 	for (int i = 0; i < deck.numberOfCards(); i++) {
 		std::cout << deck.peekCardAtIndex(i) << std::endl;
 	}
+	*/
 	Table table;
 	return 0;
 }

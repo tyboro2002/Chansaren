@@ -257,3 +257,15 @@ bool Deck::operator>(const Deck& other) const {
 bool Deck::operator<(const Deck& other) const {
 	return calculateValue() < other.calculateValue();
 }
+
+/*
+* split this deck in to n decks in the vector that is given (n is size of decks vector) (consume the cards in this deck)
+*/
+void Deck::splitDeckIntoNDecks(std::vector<Deck>* decks) {
+	Kaart kaart;
+	int loops = numberOfCards();
+	for (int i = 0; i < loops; i++) {
+		kaart = popFirst();
+		decks->at(i % decks->size()).addCard(kaart);
+	}
+}
