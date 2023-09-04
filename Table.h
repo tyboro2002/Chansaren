@@ -14,5 +14,6 @@ class Table {
 	int m_playingPlayer = 0;
 public:
 	Table();
+	friend std::ostream& operator<<(std::ostream& os, const Table& table);
 	void stepTable();
 };

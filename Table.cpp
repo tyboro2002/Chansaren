@@ -69,6 +69,18 @@ Table::Table() {
 	*/
 }
 
+/*
+* print a table to the outputstream
+*/
+std::ostream& operator<<(std::ostream& os, const Table& table) {
+	os << "the table has " << table.m_playerCount << " players" << endl;
+	os << "the cards on the table are: " << endl;
+	for (Player player : table.m_onTheTable) {
+		os << player << endl;
+	}
+	return os;
+}
+
 void Table::stepTable() {
 	int numberOfCards;
 	std::cout << "Enter number of cards: ";
@@ -79,5 +91,11 @@ void Table::stepTable() {
 		std::cout << "Enter a valid number!" << std::endl;
 		std::cout << "Enter number of cards: ";
 		std::cout.flush();
+	}
+
+	for (int i = 0; i < m_playerCount; i++) {
+		Deck tempDeck;
+		m_players.at(i).layNFirstCards(tempDeck, numberOfCards);
+		m_onTheTable.at(i).recieveDeck(tempDeck);
 	}
 }

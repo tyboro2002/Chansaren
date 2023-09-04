@@ -191,23 +191,19 @@ const int Deck::calculateValue() const{
 /*
 * pop the cards at the n last index (remove it)
 */
-const Deck& Deck::popNLast(int number_of_cards = 1) {
-	Deck fullDeck;
+void Deck::popNLast(Deck& fullDeck, int number_of_cards = 1) {
 	for(int i = 0; i < number_of_cards; i++){
 		fullDeck.addCard(popLast());
 	}
-	return fullDeck;
 }
 
 /*
 * pop the cards at the n first index (remove it)
 */
-const Deck& Deck::popNFirst(int number_of_cards = 1) {
-	Deck fullDeck;
+void Deck::popNFirst(Deck& fullDeck, int number_of_cards = 1) {
 	for (int i = 0; i < number_of_cards; i++) {
 		fullDeck.addCard(popFirst());
 	}
-	return fullDeck;
 }
 
 /*

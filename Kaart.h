@@ -83,8 +83,8 @@ public:
 	const Kaart & peekLast();
 	const Kaart & popFirst();
 	const Kaart & popLast();
-	const Deck& popNLast(int number_of_cards);
-	const Deck& popNFirst(int number_of_cards);
+	void popNLast(Deck& fullDeck, int number_of_cards);
+	void popNFirst(Deck& fullDeck, int number_of_cards);
 
 	void splitDeckIntoNDecks(std::vector<Deck>* decks);
 };

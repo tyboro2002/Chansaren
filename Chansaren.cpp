@@ -32,5 +32,6 @@ int main(){
 	*/
 	Table table;
 	table.stepTable();
+	cout << table;
 	return 0;
 }

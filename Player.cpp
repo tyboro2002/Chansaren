@@ -50,14 +50,13 @@ void Player::recieveDeck(const Deck& deck) {
 /*
 * returns a deck of the first n cards of the player (also consume them)
 */
-const Deck& Player::layNFirstCards(const int n)
-{
-	return m_cards.popNFirst(n);
+void Player::layNFirstCards(Deck& fullDeck, const int n = 1){
+	m_cards.popNFirst(fullDeck, n);
 }
 
 /*
 * returns a deck of the last n cards of the player (also consume them)
 */
-const Deck& Player::layNLastCards(const int n) {
-	return m_cards.popNLast(n);
+void Player::layNLastCards(Deck& fullDeck, const int n = 1) {
+	m_cards.popNLast(fullDeck, n);
 }
