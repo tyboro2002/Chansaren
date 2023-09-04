@@ -31,5 +31,6 @@ int main(){
 	}
 	*/
 	Table table;
+	table.stepTable();
 	return 0;
 }
