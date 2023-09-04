@@ -131,6 +131,7 @@ void Table::stepTable() {
 	checkRules();
 
 	vector<int> winnerIndexes = checkWinner();
+	cout << m_players.at(winnerIndexes.at(0)).getName() << endl;
 
 	if (winnerIndexes.size() == 1) {
 		int winnerIndex = winnerIndexes.at(0);
@@ -165,22 +166,69 @@ void Table::checkRules() {
 */
 const vector<int> Table::checkWinner() {
 	// TODO check for special winning rules
+	// (multiple consecutive players but of different lengths)
 
-	int winnerIndex = 0;
+	bool ignoreValuesCons = false;
+	bool ignoreValuesAce = false;
+	bool singlesFolowing = checkAllSingleAndFollowingUp(m_onTheTable);
+
 	int winnerValue = 0;
-	for (int i = 0; i < m_playerCount; i++) {
-		int curVal = m_onTheTable.at(i).getCards().calculateValue();
-		if (curVal > winnerValue) {
-			winnerValue = curVal;
-			winnerIndex = i;
+	if (!singlesFolowing) {
+		for (int i = 0; i < m_playerCount; i++) {
+			Deck stapel = m_onTheTable.at(i).getCards();
+			int curVal = stapel.calculateValue();
+			if (checkAllConsecutive(stapel)) ignoreValuesCons = true;
+			if (checkOnlyAce(stapel)) ignoreValuesAce = true;
+			if (curVal > winnerValue) {
+				winnerValue = curVal;
+			}
 		}
 	}
+	/*
+	cout << "ignoreValuesCons: " << ignoreValuesCons << endl;
+	cout << "ignoreValuesAce: " << ignoreValuesAce << endl;
+	cout << "singlesFolowing: " << singlesFolowing << endl;
+	*/
 	vector<int> winnerVector;
-	for (int i = 0; i < m_playerCount; i++) {
-		int curVal = m_onTheTable.at(i).getCards().calculateValue();
-		if (curVal == winnerValue) {
-			winnerVector.push_back(i);
+	if (!(ignoreValuesAce || ignoreValuesCons || singlesFolowing)) {
+		for (int i = 0; i < m_playerCount; i++) {
+			int curVal = m_onTheTable.at(i).getCards().calculateValue();
+			if (curVal == winnerValue) winnerVector.push_back(i);
 		}
+		return winnerVector;
 	}
-	return winnerVector;
+	if(ignoreValuesAce){
+		for (int i = 0; i < m_playerCount; i++) {
+			if (checkOnlyAce(m_onTheTable.at(i).getCards())) winnerVector.push_back(i);
+		}
+		return winnerVector;
+	}
+	if (singlesFolowing) {
+		int lowestCons = 999;
+		for (int i = 0; i < m_playerCount; i++) {
+			Deck stapel = m_onTheTable.at(i).getCards();
+			if (lowestVal(stapel) < lowestCons) lowestCons = lowestVal(stapel);
+		}
+		for (int i = 0; i < m_playerCount; i++) {
+			Deck stapel = m_onTheTable.at(i).getCards();
+			if (lowestVal(stapel) == lowestCons) winnerVector.push_back(i);
+		}
+		return winnerVector;
+	}
+	if (ignoreValuesCons) {
+		int lowestCons = 999;
+		for (int i = 0; i < m_playerCount; i++) {
+			Deck stapel = m_onTheTable.at(i).getCards();
+			if (checkAllConsecutive(stapel)) {
+				if (lowestVal(stapel) < lowestCons) lowestCons = lowestVal(stapel);
+			}
+		}
+		for (int i = 0; i < m_playerCount; i++) {
+			Deck stapel = m_onTheTable.at(i).getCards();
+			if (checkAllConsecutive(stapel)) {
+				if (lowestVal(stapel) == lowestCons) winnerVector.push_back(i);
+			}
+		}
+		return winnerVector;
+	}
 }

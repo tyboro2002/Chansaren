@@ -273,3 +273,15 @@ void Deck::splitDeckIntoNDecks(std::vector<Deck>* decks) {
 		decks->at(i % decks->size()).addCard(kaart);
 	}
 }
+
+/*
+* print a deck to the output stream
+*/
+std::ostream& operator<<(std::ostream& os, const Deck& deck) {
+	Kaart kaart;
+	for (int i = 0; i < deck.numberOfCards(); i++) {
+		kaart = deck.peekCardAtIndex(i);
+		os << kaart << std:: endl;
+	}
+	return os;
+}

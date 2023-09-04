@@ -53,6 +53,7 @@ int getDoubleCount(const Deck& deck) {
 }
 
 bool checkAllConsecutive(const Deck& deck) {
+	if (deck.numberOfCards() == 1) return false;
 	int doubles = 0;
 	std::vector<Kaart> cards;
 	for (int i = 0; i < deck.numberOfCards(); i++) {
@@ -93,4 +94,40 @@ int countNotUsedTwo(const Deck& deck) {
 		if (deck.peekCardAtIndex(i).getValue() == TWO && deck.peekCardAtIndex(i).getCardOnTop() == nullptr) two++;
 	}
 	return two;
+}
+
+int lowestVal(const Deck& deck) {
+	int doubles = 0;
+	std::vector<Kaart> cards;
+	for (int i = 0; i < deck.numberOfCards(); i++) {
+		cards.push_back(deck.peekCardAtIndex(i));
+	}
+
+	// Define the comparison function (cmp) using a lambda
+	auto cmp = [](const Kaart& card1, const Kaart& card2) {
+		// Compare the values of the two cards
+		return card1.getValue() < card2.getValue();
+		};
+
+	sort(cards.begin(), cards.end(), cmp);
+
+	// If all values are consecutive, return true
+	return cards[0].getValue();
+}
+
+bool checkAllSingle(std::vector<Player> m_players) {
+	for (int i = 0; i < m_players.size(); i++) {
+		if (m_players.at(i).getCards().numberOfCards() != 1) return false;
+	}
+	return true;
+}
+
+bool checkAllSingleAndFollowingUp(std::vector<Player> m_players) {
+	if (!checkAllSingle(m_players)) return false;
+	Deck stapel;
+	for (int i = 0; i < m_players.size(); i++) {
+		stapel.mergeBack(m_players.at(i).getCards());
+	}
+	if (!checkAllConsecutive(stapel)) return false;
+	return true;
 }

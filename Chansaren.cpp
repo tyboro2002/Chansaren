@@ -34,12 +34,16 @@ int main(){
 	
 	//Table table;
 	std::vector<string> names = {"tybo", "jarno"};
-	Table table = Table(names,1);
-	table.stepTable();
-	cout << table;
-	cout << endl;
+	while (true) {
+		Table table = Table(names, 1);
+		table.stepTable();
+		cout << table;
+		cout << endl;
+	}
+	/*
 	for (Player player : table.getPlayers()) {
 		std::cout << player << endl;
 	}
+	*/
 	return 0;
 }

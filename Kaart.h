@@ -65,6 +65,7 @@ public:
 	Deck() = default;
 	Deck(const Deck& other) : m_cards(other.m_cards) {}
 	Deck(Deck&& other) : m_cards(std::move(other.m_cards)) {}
+	friend std::ostream& operator<<(std::ostream& os, const Deck& deck);
 	static void full(Deck* fullDeck, int number_of_decks);
 	void addCard(const Kaart& card);
 	void clearDeck();
