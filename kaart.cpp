@@ -226,7 +226,8 @@ void Deck::full(Deck* fullDeck, int number_of_decks = 1) {
 			}
 		}
 	}
-	auto rng = std::default_random_engine{};
+	std::random_device rd;
+	std::default_random_engine rng(rd());
 	std::shuffle(std::begin(fullDeckVector), std::end(fullDeckVector), rng);
 	for (int i = 0; i < fullDeckVector.size(); i++) {
 		fullDeck->addCard(fullDeckVector[i]);
