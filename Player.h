@@ -8,6 +8,7 @@ class Player {
 	Deck m_cards;
 public:
 	Deck getCards();
+	Deck* getCardsPointer();
 	std::string getName();
 	void clearCards();
 	Player(const string& m_name);

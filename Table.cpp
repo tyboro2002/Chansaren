@@ -157,6 +157,20 @@ void Table::stepTable() {
 * check the rules and ask and aply them until nothing more needed
 */
 void Table::checkRules() {
+	for (int i = 0; i < m_playerCount; i++) {
+		int unusedTwo = countNotUsedTwo(m_onTheTable.at(i).getCards());
+		if (unusedTwo) {
+			Deck* tafelStapel = m_onTheTable.at(i).getCardsPointer();
+			Kaart kaart = m_players.at(i).getCardsPointer()->popFirst(); //TO FIX this object is temporary so deleted if function ends
+			for (int k = 0; k < tafelStapel->numberOfCards(); k++) {
+				if (tafelStapel->peekCardAtIndex(k).getValue() == 2 && tafelStapel->peekCardAtIndex(k).cardOnTop() == false) {
+					tafelStapel->layCardOnIndex(&kaart, k);
+					tafelStapel->addCard(kaart);
+					break;
+				}
+			}
+		}
+	}
 	//TODO
 }
 

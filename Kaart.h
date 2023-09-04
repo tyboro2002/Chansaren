@@ -56,6 +56,8 @@ public:
 	const int getValue() const;
 	bool cardOnTop() const;
 	Kaart* getCardOnTop() const;
+	void layCardOnTop(Kaart* kaart);
+	void removeCardFromTop();
 };
 
 // List of cards
@@ -81,6 +83,7 @@ public:
 	bool operator<(const Deck& other) const;
 
 	const Kaart & peekCardAtIndex(const int index) const;
+	Kaart* getCardAtIndex(const int index);
 	const Kaart & peekFirst();
 	const Kaart & peekLast();
 	const Kaart & popFirst();
@@ -89,4 +92,6 @@ public:
 	void popNFirst(Deck& fullDeck, int number_of_cards);
 
 	void splitDeckIntoNDecks(std::vector<Deck>* decks);
+	void replaceCardAtIndex(const int index, Kaart& kaart);
+	void layCardOnIndex(Kaart* kaart, const int index);
 };

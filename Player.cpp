@@ -23,6 +23,12 @@ std::ostream& operator<<(std::ostream& os, const Player& player) {
 Deck Player::getCards() {
 	return m_cards;
 }
+/*
+* return a pointer to the deck of the player
+*/
+Deck* Player::getCardsPointer() {
+	return &m_cards;
+}
 
 /*
 * return the name of the player

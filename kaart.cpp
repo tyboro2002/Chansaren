@@ -72,6 +72,20 @@ bool Kaart::operator<(const Kaart& other) const {
 }
 
 /*
+* remove the card from the top of this card
+*/
+void Kaart::removeCardFromTop() {
+	m_on_top = nullptr;
+}
+
+/*
+* add a card to the top of this card
+*/
+void Kaart::layCardOnTop(Kaart* kaart) {
+	m_on_top = kaart;
+}
+
+/*
 * get the numerical value of a card
 */
 const int Kaart::getValue() const {
@@ -126,6 +140,13 @@ void Deck::mergeBack(const Deck& otherDeck) {
 */
 const Kaart& Deck::peekCardAtIndex(const int index) const{
 	return m_cards.at(index);
+}
+
+/*
+* get the card at the index (dont remove it)
+*/
+Kaart* Deck::getCardAtIndex(const int index){
+	return &m_cards.at(index);
 }
 
 /*
@@ -284,4 +305,19 @@ std::ostream& operator<<(std::ostream& os, const Deck& deck) {
 		os << kaart << std:: endl;
 	}
 	return os;
+}
+
+/*
+* switch the card at the index with the recieved card
+*/
+void Deck::replaceCardAtIndex(const int index, Kaart& kaart) {
+	m_cards.at(index) = kaart;
+}
+
+/*
+* lay a card on the indexed card
+*/
+void Deck::layCardOnIndex(Kaart* kaart, const int index) {
+	Kaart* onderlegger = getCardAtIndex(index);
+	onderlegger->layCardOnTop(kaart);
 }
