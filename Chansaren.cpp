@@ -33,11 +33,11 @@ int main(){
 
 	
 	//Table table;
-	std::vector<string> names = {"tybo", "jarno"};
+	std::vector<string> names = {"tybo", "jarno", "mathis"};
 	while (true) {
 		Table table = Table(names, 1);
 		//table.stepTable(true);
-		table.nextRound(true,3);
+		table.nextRound(true,8);
 		//cout << "this should print empty table" << endl;
 		//cout << table << endl;
 	}

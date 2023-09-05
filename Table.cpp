@@ -132,7 +132,7 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 	}
 
 	//std::cout << *this << endl;
-
+	if (printTable) std::cout << *this << endl << endl;
 	checkRules();
 
 	if (printTable) std::cout << *this << endl;
@@ -167,6 +167,12 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 * check the rules and ask and aply them until nothing more needed
 */
 void Table::checkRules() {
+	if (checkDoubleSeven(m_onTheTable) && false) {
+		//useTwoSevens(m_onTheTable);
+		cout << "double seven occured looping the decks" << endl;
+		loopDecks(m_onTheTable, true);
+		checkRules();
+	}
 	for (int i = 0; i < m_playerCount; i++) {
 		int unusedTwo = countNotUsedTwo(m_onTheTable.at(i).getCardsPointer());
 		if (unusedTwo) {

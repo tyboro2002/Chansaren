@@ -11,11 +11,27 @@ bool checkDoubleSeven(std::vector<Player> m_players) {
 	for (Player player : m_players) {
 		Deck playerDeck = player.getCards();
 		for (int i = 0; i < playerDeck.numberOfCards(); i++) {
-			if (playerDeck.peekCardAtIndex(i).getValue() == 7) sevens++;
+			if (playerDeck.peekCardAtIndex(i).getValue() == 7/* && playerDeck.peekCardAtIndex(i).getUsed() == false*/) sevens++;
 		}
 	}
 	return sevens >= 2;
 }
+
+/*
+void useTwoSevens(std::vector<Player>& m_players) {
+	int todo = 2;
+	for (Player player : m_players) {
+		Deck* playerDeck = player.getCardsPointer();
+		for (int i = 0; i < playerDeck->numberOfCards(); i++) {
+			if (playerDeck->peekCardAtIndex(i).getValue() == 7 && playerDeck->peekCardAtIndex(i).getUsed() == false && todo > 0) {
+				playerDeck->getCardAtIndex(i)->useCard();
+				todo--;
+			}
+			if (todo == 0) break;
+		}
+	}
+}
+*/
 
 bool checkTripleSix(const Deck& deck) {
 	int six = 0;
@@ -140,7 +156,7 @@ void loopDecks(std::vector<Player>& players, bool clockwise) {
 	if (players.size() < 2) {
 		return;  // Need at least 2 players for this operation.
 	}
-
+	/*
 	int numPlayers = players.size();
 
 	for (int playerIndex = 0; playerIndex < numPlayers; ++playerIndex) {
@@ -151,5 +167,16 @@ void loopDecks(std::vector<Player>& players, bool clockwise) {
 
 		// Swap decks between the current player and the next player
 		std::swap(currentPlayerDeck, nextPlayerDeck);
+	}
+	*/
+	if (!clockwise) {
+		for (int i = 1; i < players.size(); i++) {
+			players.at(i - 1).swapDecks(players.at(i));
+		}
+	}
+	else {
+		for (int i = players.size() - 1; i > 0; i--) {
+			players.at(i).swapDecks(players.at(i-1));
+		}
 	}
 }

@@ -2,16 +2,6 @@
 
 const std::vector<std::string> Kaart::unicode_chars{ "♠", "♥", "♣", "◆" };
 
-
-// Copy constructor definition
-Kaart::Kaart(const Kaart& other)
-	: m_value(other.m_value), m_symbol(other.m_symbol), m_kleur(other.m_kleur) {
-	//if (other.m_on_top.has_value()) {
-	//	// If 'other' has a card on top, copy it to 'this'
-	//	m_on_top = other.m_on_top.value();
-	//}
-}
-
 // Assignment operator overload
 Kaart& Kaart::operator=(const Kaart& other) {
     if (this == &other) {

@@ -85,3 +85,14 @@ void Player::layNFirstCards(Deck& fullDeck, const int n = 1){
 void Player::layNLastCards(Deck& fullDeck, const int n = 1) {
 	m_cards.popNLast(fullDeck, n);
 }
+
+/*
+* swap the cards from this player's deck with the cards from the other players's deck keeping the multiplier
+*/
+void Player::swapDecks(Player& other) {
+	Deck tempDeck(getCards());
+	clearCards();
+	recieveDeck(other.getCards());
+	other.clearCards();
+	other.recieveDeck(tempDeck);
+}

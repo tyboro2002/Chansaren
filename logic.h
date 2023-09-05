@@ -18,6 +18,7 @@
 */
 bool checkOnlyAce(const Deck& deck);
 bool checkDoubleSeven(std::vector<Player> m_players);
+//void useTwoSevens(std::vector<Player>& m_players);
 int getDoubleCount(const Deck& deck);
 bool checkAllConsecutive(const Deck& deck);
 int countJacks(const Deck& deck);
@@ -25,4 +26,4 @@ int countNotUsedTwo(const Deck* deck);
 int lowestVal(const Deck& deck);
 bool checkAllSingle(std::vector<Player> m_players);
 bool checkAllSingleAndFollowingUp(std::vector<Player> m_players);
-void loopDecks(std::vector<Player> m_players, bool clockwise);
+void loopDecks(std::vector<Player>& players, bool clockwise);

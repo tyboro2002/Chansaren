@@ -18,4 +18,5 @@ public:
 	void layNLastCards(Deck& fullDeck, const int n);
 	void recieveCard(const Kaart& kaart);
 	void recieveDeck(const Deck& deck);
+	void swapDecks(Player& other);
 };
