@@ -104,13 +104,14 @@ Table::Table(std::vector<string> names, const int number_of_decks = 1) {
 std::ostream& operator<<(std::ostream& os, const Table& table) {
 	os << "the table has " << table.m_playerCount << " players" << endl;
 	os << "the cards on the table are: " << endl;
-	for (Player player : table.m_onTheTable) {
-		os << player << endl;
+	for (int i = 0; i < table.m_onTheTable.size()-1;i++) {
+		os << table.m_onTheTable.at(i) << endl;
 	}
+	os << table.m_onTheTable.at(table.m_onTheTable.size() - 1);
 	return os;
 }
 
-void Table::stepTable() {
+void Table::stepTable(bool printTable=true) {
 	int numberOfCards;
 	std::cout << "Enter number of cards: ";
 	std::cout.flush();
@@ -128,22 +129,22 @@ void Table::stepTable() {
 		m_onTheTable.at(i).recieveDeck(tempDeck);
 	}
 
-	std::cout << *this << endl;
+	//std::cout << *this << endl;
 
 	checkRules();
 
-	std::cout << *this << endl;
+	if (printTable) std::cout << *this << endl;
 	vector<int> winnerIndexes = checkWinner();
-	cout << m_players.at(winnerIndexes.at(0)).getName() << endl;
 
 	if (winnerIndexes.size() == 1) {
+		cout << "the player named: " << m_players.at(winnerIndexes.at(0)).getName() << " won this round." << endl;
 		int winnerIndex = winnerIndexes.at(0);
 		Deck collected;
 		for (int i = 0; i < m_playerCount; i++) {
 			collected.mergeBack(m_onTheTable.at(i).getCards());
 		}
 		m_players.at(winnerIndex).recieveDeck(collected);
-		for (int i = 2; i < m_playerCount; i++) {
+		for (int i = 0; i < m_playerCount; i++) {
 			m_onTheTable.at(i).clearCards();
 		}
 	}
@@ -167,7 +168,7 @@ void Table::checkRules() {
 			for (int k = 0; k < tafelStapel->numberOfCards(); k++) {
 				if (tafelStapel->peekCardAtIndex(k).getValue() == 2 && tafelStapel->peekCardAtIndex(k).cardOnTop() == false) {
 					tafelStapel->addCard(m_players.at(i).getCardsPointer()->popFirst());
-					tafelStapel->layCardOnIndex(tafelStapel->getCardAtIndex(tafelStapel->numberOfCards()-1), k);
+					tafelStapel->layCardOnIndex(tafelStapel->peekCardAtIndexNonConst(tafelStapel->numberOfCards()-1), k);
 					checkRules();
 					break;
 				}

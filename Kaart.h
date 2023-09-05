@@ -38,12 +38,12 @@ class Kaart {
 	Number m_value;
 	Symbol m_symbol;
 	Colour m_kleur;
-	//std::optional<Kaart> m_on_top;
-	Kaart* m_on_top = nullptr;
+	int m_multiplier = 1;
+	//Kaart* m_on_top = nullptr;
 public:
-	Kaart() : m_value(ACE), m_symbol(Hearts), m_kleur(R), m_on_top(nullptr) {}
-	Kaart(Number number, Symbol symbol) : m_value(number), m_symbol(symbol), m_kleur((Colour)(symbol%2)), m_on_top(nullptr) {}
-	Kaart(Number number, Symbol symbol, Colour colour) : m_value(number), m_symbol(symbol), m_kleur(colour), m_on_top(nullptr) {}
+	Kaart() : m_value(ACE), m_symbol(Hearts), m_kleur(R), m_multiplier(1) {}
+	Kaart(Number number, Symbol symbol) : m_value(number), m_symbol(symbol), m_kleur((Colour)(symbol%2)), m_multiplier(1) {}
+	Kaart(Number number, Symbol symbol, Colour colour) : m_value(number), m_symbol(symbol), m_kleur(colour), m_multiplier(1) {}
 	~Kaart() {};
 	Kaart(const Kaart& other);
 	friend std::ostream& operator<<(std::ostream& os, const Kaart& kaart);
@@ -54,11 +54,13 @@ public:
 	Kaart& operator=(const Kaart& other);
 	static const std::vector<std::string> unicode_chars;
 	const int getValue() const;
+	const int getMultiplier() const;
 	const Symbol getSymbol() const;
+
 	bool cardOnTop() const;
-	Kaart* getCardOnTop() const;
-	void layCardOnTop(Kaart* kaart);
-	void removeCardFromTop();
+	bool isOnTopOfCard() const;
+	void layCardOnTop(Kaart& kaart);
+	void removeCardFromTop(Kaart& kaart);
 };
 
 // List of cards
@@ -84,6 +86,7 @@ public:
 	bool operator<(const Deck& other) const;
 
 	const Kaart & peekCardAtIndex(const int index) const;
+	Kaart& peekCardAtIndexNonConst(const int index);
 	Kaart* getCardAtIndex(const int index);
 	const Kaart & peekFirst();
 	const Kaart & peekLast();
@@ -94,5 +97,5 @@ public:
 
 	void splitDeckIntoNDecks(std::vector<Deck>* decks);
 	void replaceCardAtIndex(const int index, Kaart& kaart);
-	void layCardOnIndex(Kaart* kaart, const int index);
+	void layCardOnIndex(Kaart& kaart, const int index);
 };

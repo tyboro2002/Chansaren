@@ -36,9 +36,9 @@ int main(){
 	std::vector<string> names = {"tybo", "jarno"};
 	while (true) {
 		Table table = Table(names, 1);
-		table.stepTable();
-		//cout << table;
-		cout << endl;
+		table.stepTable(true);
+		//cout << "this should print empty table" << endl;
+		//cout << table << endl;
 	}
 	/*
 	for (Player player : table.getPlayers()) {

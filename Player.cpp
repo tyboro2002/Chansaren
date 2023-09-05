@@ -14,6 +14,8 @@ std::ostream& operator<<(std::ostream& os, const Player& player) {
 		}
 		os << player.m_cards.peekCardAtIndex(player.m_cards.numberOfCards()-1);
 	}
+	os << endl;
+	os << "has value: " << player.m_cards.calculateValue();
 	return os;
 }
 
@@ -49,34 +51,6 @@ void Player::clearCards() {
 */
 Player::Player(const string& m_name){
 	this->m_name = m_name;
-}
-
-/*
-* copy constructor of the player
-*/
-Player::Player(const Player& other) : m_name(other.m_name) {
-	// Deep copy of the player's deck
-	for (int i = 0; i < other.m_cards.numberOfCards(); i++) {
-		const Kaart& card = other.m_cards.peekCardAtIndex(i);
-		if (card.cardOnTop()) {
-			// If the card has a card on top, create a new card with the same attributes
-			Kaart copiedCard((Number)card.getValue(), card.getSymbol());
-			m_cards.addCard(copiedCard);
-			// Update the m_on_top pointer to point to the corresponding card in the new deck
-			if (card.getCardOnTop()->getValue() == card.getCardOnTop()->getValue()) {
-				for (int k = 0; k < m_cards.numberOfCards(); k++) {
-					const Kaart& c = m_cards.peekCardAtIndex(k);
-					if (c.getValue() == card.getCardOnTop()->getValue() && c.getSymbol() == card.getCardOnTop()->getSymbol()) {
-						m_cards.getCardAtIndex(m_cards.numberOfCards()-1)->layCardOnTop(m_cards.getCardAtIndex(k));
-					}
-				}
-			}
-		}
-		else {
-			// If the card doesn't have a card on top, simply copy it
-			m_cards.addCard(card);
-		}
-	}
 }
 
 

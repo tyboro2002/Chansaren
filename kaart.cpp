@@ -40,8 +40,8 @@ std::ostream& operator<<(std::ostream& os, const Kaart& kaart) {
 	const std::vector<std::string> symbool{ "Spades","Hearts","Clubs","Diamonds"};
 	const std::vector<std::string> nummer{"ACE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN","JACK","QUEEN","KING"};
 	os << symbool[kaart.m_symbol] << " " << nummer[kaart.m_value-1];
-	if (kaart.cardOnTop()) {
-		os << " has the card: " << *kaart.getCardOnTop() << " on top";
+	if (kaart.isOnTopOfCard()) {
+		os << " has the Multiplier: " << kaart.getMultiplier();
 	}
 	return os;
 }
@@ -77,15 +77,17 @@ bool Kaart::operator<(const Kaart& other) const {
 /*
 * remove the card from the top of this card
 */
-void Kaart::removeCardFromTop() {
-	m_on_top = nullptr;
+void Kaart::removeCardFromTop(Kaart& kaart) {
+	m_multiplier = kaart.m_multiplier / 2;
+	kaart.m_multiplier=1;
 }
 
 /*
 * add a card to the top of this card
 */
-void Kaart::layCardOnTop(Kaart* kaart) {
-	m_on_top = kaart;
+void Kaart::layCardOnTop(Kaart& kaart) {
+	kaart.m_multiplier = m_multiplier * 2;
+	m_multiplier = 0;
 }
 
 /*
@@ -96,6 +98,13 @@ const int Kaart::getValue() const {
 }
 
 /*
+* get the numerical value of the multiplier of a card
+*/
+const int Kaart::getMultiplier() const {
+	return m_multiplier;
+}
+
+/*
 * get the symbol of a card
 */
 const Symbol Kaart::getSymbol() const {
@@ -103,17 +112,17 @@ const Symbol Kaart::getSymbol() const {
 }
 
 bool Kaart::cardOnTop() const {
-	return m_on_top != nullptr;
+	//return m_on_top != nullptr;
 	//return m_on_top.has_value();
+	return m_multiplier == 0;
 }
 
-Kaart* Kaart::getCardOnTop() const {
-	if (cardOnTop()) {
-		return m_on_top;
-		//return m_on_top.value(); // Return a copy of the card on top
-	}
-	throw std::runtime_error("No card on top"); // Throw a descriptive exception
+bool Kaart::isOnTopOfCard() const {
+	//return m_on_top != nullptr;
+	//return m_on_top.has_value();
+	return m_multiplier >= 2;
 }
+
 
 /****************************************************
 *
@@ -149,6 +158,13 @@ void Deck::mergeBack(const Deck& otherDeck) {
 * peek the card at the index (dont remove it)
 */
 const Kaart& Deck::peekCardAtIndex(const int index) const{
+	return m_cards.at(index);
+}
+
+/*
+* peek the card at the index (dont remove it)
+*/
+Kaart& Deck::peekCardAtIndexNonConst(const int index) {
 	return m_cards.at(index);
 }
 
@@ -212,16 +228,8 @@ const int Deck::numberOfCards() const {
 */
 const int Deck::calculateValue() const{
 	int score = 0;
-	for(Kaart card: m_cards){
-		int tempScore = card.getValue();
-		Kaart temp = card;
-		while (temp.cardOnTop()) {
-			tempScore *= temp.getCardOnTop()->getValue();
-			if (temp.getCardOnTop()->cardOnTop()) {
-				temp = *temp.getCardOnTop();
-			}
-		}
-		score += tempScore;
+	for(const Kaart& card : m_cards){
+		score += (card.getValue()*card.getMultiplier());
 	}
 	return score;
 }
@@ -327,7 +335,7 @@ void Deck::replaceCardAtIndex(const int index, Kaart& kaart) {
 /*
 * lay a card on the indexed card
 */
-void Deck::layCardOnIndex(Kaart* kaart, const int index) {
+void Deck::layCardOnIndex(Kaart& kaart, const int index) {
 	Kaart* onderlegger = getCardAtIndex(index);
 	onderlegger->layCardOnTop(kaart);
 }
