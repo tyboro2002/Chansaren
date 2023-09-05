@@ -34,6 +34,7 @@ enum Number {
 	KING
 };
 
+
 class Kaart {
 	Number m_value;
 	Symbol m_symbol;
@@ -41,7 +42,7 @@ class Kaart {
 	int m_multiplier = 1;
 	//Kaart* m_on_top = nullptr;
 public:
-	Kaart() : m_value(ACE), m_symbol(Hearts), m_kleur(R), m_multiplier(1) {}
+	Kaart() : m_value(ACE), m_symbol(Hearts), m_kleur(R), m_multiplier(0) {}
 	Kaart(Number number, Symbol symbol) : m_value(number), m_symbol(symbol), m_kleur((Colour)(symbol%2)), m_multiplier(1) {}
 	Kaart(Number number, Symbol symbol, Colour colour) : m_value(number), m_symbol(symbol), m_kleur(colour), m_multiplier(1) {}
 	~Kaart() {};

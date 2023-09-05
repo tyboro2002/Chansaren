@@ -22,7 +22,7 @@ std::ostream& operator<<(std::ostream& os, const Player& player) {
 /*
 * return the cards deck of the player
 */
-Deck Player::getCards() {
+Deck& Player::getCards() {
 	return m_cards;
 }
 /*

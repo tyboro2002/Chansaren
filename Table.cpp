@@ -110,8 +110,7 @@ std::ostream& operator<<(std::ostream& os, const Table& table) {
 	os << table.m_onTheTable.at(table.m_onTheTable.size() - 1);
 	return os;
 }
-
-void Table::stepTable(bool printTable=true) {
+void Table::stepTable(bool printTable = true) {
 	int numberOfCards;
 	std::cout << "Enter number of cards: ";
 	std::cout.flush();
@@ -122,7 +121,10 @@ void Table::stepTable(bool printTable=true) {
 		std::cout << "Enter number of cards: ";
 		std::cout.flush();
 	}
+	nextRound(printTable, numberOfCards);
+}
 
+void Table::nextRound(bool printTable, int numberOfCards) {
 	for (int i = 0; i < m_playerCount; i++) {
 		Deck tempDeck;
 		m_players.at(i).layNFirstCards(tempDeck, numberOfCards);
@@ -147,6 +149,10 @@ void Table::stepTable(bool printTable=true) {
 		for (int i = 0; i < m_playerCount; i++) {
 			m_onTheTable.at(i).clearCards();
 		}
+	}
+	else if (winnerIndexes.size() == 0) {
+		cout << "no winners found: " << endl;
+		winnerIndexes = checkWinner();
 	}
 	else {
 		cout << "a draw occured between players: " << endl;
@@ -193,7 +199,7 @@ const vector<int> Table::checkWinner() {
 	int winnerValue = 0;
 	if (!singlesFolowing) {
 		for (int i = 0; i < m_playerCount; i++) {
-			Deck stapel = m_onTheTable.at(i).getCards();
+			Deck& stapel = m_onTheTable.at(i).getCards();
 			int curVal = stapel.calculateValue();
 			if (checkAllConsecutive(stapel)) ignoreValuesCons = true;
 			if (checkOnlyAce(stapel)) ignoreValuesAce = true;

@@ -4,14 +4,17 @@
 #include "Player.h"
 
 /*
-dubbele ==> kaart geven
-zot ==> kaart bove pak
-dubbele 7==> pakjes wiselen
-3 zesen ==> alle personen dood van de andere personen
-enkel aas ==> zekere winst
-kleinst opeenvolgend==> wine
-2==> verdubele
-heer en dame==> extra kaarte
+* // implemented
+* 2==> verdubele
+* 
+* // not yet implemented
+* dubbele 7==> pakjes wiselen
+* zot ==> kaart bove pak
+* 3 zesen ==> alle personen dood van de andere personen
+* enkel aas ==> zekere winst
+* kleinst opeenvolgend==> wine
+* dubbele ==> kaart
+* heer en dame==> extra kaarte
 */
 bool checkOnlyAce(const Deck& deck);
 bool checkDoubleSeven(std::vector<Player> m_players);
@@ -22,3 +25,4 @@ int countNotUsedTwo(const Deck* deck);
 int lowestVal(const Deck& deck);
 bool checkAllSingle(std::vector<Player> m_players);
 bool checkAllSingleAndFollowingUp(std::vector<Player> m_players);
+void loopDecks(std::vector<Player> m_players, bool clockwise);

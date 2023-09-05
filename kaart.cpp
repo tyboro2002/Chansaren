@@ -193,6 +193,11 @@ const Kaart& Deck::peekLast() {
 * pop the card at the first index (remove it)
 */
 const Kaart& Deck::popFirst() {
+	if (m_cards.empty()) {
+		// Return a default empty card (you should define your own empty card)
+		static Kaart emptyCard; // You need to define what an empty card means
+		return emptyCard;
+	}
 	const Kaart& temp = peekFirst();
 	m_cards.pop_front();
 	return temp;
@@ -202,6 +207,11 @@ const Kaart& Deck::popFirst() {
 * pop the card at the last index (remove it)
 */
 const Kaart& Deck::popLast() {
+	if (m_cards.empty()) {
+		// Return a default empty card (you should define your own empty card)
+		static Kaart emptyCard; // You need to define what an empty card means
+		return emptyCard;
+	}
 	const Kaart& temp = peekLast();
 	m_cards.pop_back();
 	return temp;
@@ -239,7 +249,7 @@ const int Deck::calculateValue() const{
 */
 void Deck::popNLast(Deck& fullDeck, int number_of_cards = 1) {
 	for(int i = 0; i < number_of_cards; i++){
-		fullDeck.addCard(popLast());
+		if (m_cards.size() > 0) fullDeck.addCard(popLast());
 	}
 }
 
@@ -248,7 +258,7 @@ void Deck::popNLast(Deck& fullDeck, int number_of_cards = 1) {
 */
 void Deck::popNFirst(Deck& fullDeck, int number_of_cards = 1) {
 	for (int i = 0; i < number_of_cards; i++) {
-		fullDeck.addCard(popFirst());
+		if(m_cards.size() > 0) fullDeck.addCard(popFirst());
 	}
 }
 

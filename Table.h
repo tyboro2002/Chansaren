@@ -17,6 +17,7 @@ public:
 	Table(std::vector<string> names, const int number_of_decks);
 	friend std::ostream& operator<<(std::ostream& os, const Table& table);
 	void stepTable(bool printTable);
+	void nextRound(bool printTable = true, int numberOfCards = 1);
 	std::vector<Player> getPlayers();
 private:
 	void checkRules();

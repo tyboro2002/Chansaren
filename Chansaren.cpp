@@ -36,7 +36,8 @@ int main(){
 	std::vector<string> names = {"tybo", "jarno"};
 	while (true) {
 		Table table = Table(names, 1);
-		table.stepTable(true);
+		//table.stepTable(true);
+		table.nextRound(true,3);
 		//cout << "this should print empty table" << endl;
 		//cout << table << endl;
 	}

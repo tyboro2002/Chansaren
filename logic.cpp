@@ -131,3 +131,25 @@ bool checkAllSingleAndFollowingUp(std::vector<Player> m_players) {
 	if (!checkAllConsecutive(stapel)) return false;
 	return true;
 }
+
+/*
+ * Loop the decks of the players around in the given direction:
+ * Give the deck of player A to player B, B to C, and C back to player A.
+ */
+void loopDecks(std::vector<Player>& players, bool clockwise) {
+	if (players.size() < 2) {
+		return;  // Need at least 2 players for this operation.
+	}
+
+	int numPlayers = players.size();
+
+	for (int playerIndex = 0; playerIndex < numPlayers; ++playerIndex) {
+		int nextPlayerIndex = (clockwise) ? (playerIndex + 1) % numPlayers : (playerIndex - 1 + numPlayers) % numPlayers;
+
+		Deck& currentPlayerDeck = players[playerIndex].getCards();
+		Deck& nextPlayerDeck = players[nextPlayerIndex].getCards();
+
+		// Swap decks between the current player and the next player
+		std::swap(currentPlayerDeck, nextPlayerDeck);
+	}
+}
