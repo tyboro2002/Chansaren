@@ -88,10 +88,10 @@ int countJacks(const Deck& deck) {
 	return jacks;
 }
 
-int countNotUsedTwo(const Deck& deck) {
+int countNotUsedTwo(const Deck* deck) {
 	int two = 0;
-	for (int i = 0; i < deck.numberOfCards(); i++) {
-		if (deck.peekCardAtIndex(i).getValue() == TWO && deck.peekCardAtIndex(i).cardOnTop() == false) two++;
+	for (int i = 0; i < deck->numberOfCards(); i++) {
+		if (deck->peekCardAtIndex(i).getValue() == TWO && deck->peekCardAtIndex(i).cardOnTop() == false) two++;
 	}
 	return two;
 }

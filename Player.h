@@ -13,6 +13,7 @@ public:
 	void clearCards();
 	Player(const string& m_name);
 	Player(const string& m_name, const Deck& m_cards);
+	Player(const Player& other);
 	friend std::ostream& operator<<(std::ostream& os, const Player& player);
 	void layNFirstCards(Deck& fullDeck, const int n);
 	void layNLastCards(Deck& fullDeck, const int n);

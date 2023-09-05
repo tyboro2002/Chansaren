@@ -54,6 +54,7 @@ public:
 	Kaart& operator=(const Kaart& other);
 	static const std::vector<std::string> unicode_chars;
 	const int getValue() const;
+	const Symbol getSymbol() const;
 	bool cardOnTop() const;
 	Kaart* getCardOnTop() const;
 	void layCardOnTop(Kaart* kaart);

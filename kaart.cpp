@@ -40,6 +40,9 @@ std::ostream& operator<<(std::ostream& os, const Kaart& kaart) {
 	const std::vector<std::string> symbool{ "Spades","Hearts","Clubs","Diamonds"};
 	const std::vector<std::string> nummer{"ACE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN","JACK","QUEEN","KING"};
 	os << symbool[kaart.m_symbol] << " " << nummer[kaart.m_value-1];
+	if (kaart.cardOnTop()) {
+		os << " has the card: " << *kaart.getCardOnTop() << " on top";
+	}
 	return os;
 }
 
@@ -90,6 +93,13 @@ void Kaart::layCardOnTop(Kaart* kaart) {
 */
 const int Kaart::getValue() const {
 	return m_value;
+}
+
+/*
+* get the symbol of a card
+*/
+const Symbol Kaart::getSymbol() const {
+	return m_symbol;
 }
 
 bool Kaart::cardOnTop() const {

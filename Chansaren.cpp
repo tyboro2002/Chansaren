@@ -37,7 +37,7 @@ int main(){
 	while (true) {
 		Table table = Table(names, 1);
 		table.stepTable();
-		cout << table;
+		//cout << table;
 		cout << endl;
 	}
 	/*
