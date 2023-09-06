@@ -45,7 +45,7 @@ int getDoubleCount(const Deck& deck) {
 }
 
 bool checkAllConsecutive(const Deck& deck) {
-	if (deck.numberOfCards() == 1) return false;
+	if (deck.numberOfCards() <= 1) return false;
 	int doubles = 0;
 	std::vector<Kaart> cards;
 	for (int i = 0; i < deck.numberOfCards(); i++) {
@@ -132,19 +132,6 @@ void loopDecks(std::vector<Player>& players, bool clockwise) {
 	if (players.size() < 2) {
 		return;  // Need at least 2 players for this operation.
 	}
-	/*
-	int numPlayers = players.size();
-
-	for (int playerIndex = 0; playerIndex < numPlayers; ++playerIndex) {
-		int nextPlayerIndex = (clockwise) ? (playerIndex + 1) % numPlayers : (playerIndex - 1 + numPlayers) % numPlayers;
-
-		Deck& currentPlayerDeck = players[playerIndex].getCards();
-		Deck& nextPlayerDeck = players[nextPlayerIndex].getCards();
-
-		// Swap decks between the current player and the next player
-		std::swap(currentPlayerDeck, nextPlayerDeck);
-	}
-	*/
 	if (!clockwise) {
 		for (int i = 1; i < players.size(); i++) {
 			players.at(i - 1).swapDecks(players.at(i));
@@ -194,3 +181,4 @@ int askForCardIndex(const Deck& deck) {
 	}
 	return index;
 }
+

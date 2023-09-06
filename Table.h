@@ -19,7 +19,10 @@ public:
 	void stepTable(bool printTable);
 	void nextRound(bool printTable = true, int numberOfCards = 1);
 	std::vector<Player>& getPlayers();
+	bool checkGameOver();
+	Player& giveWinner();
 private:
+	void checkForDeadPlayers();
 	void takeTopCardFromOpponents(int my_index);
 	void checkRules(int sevensNeeded = 2);
 	const vector<int> checkWinner();

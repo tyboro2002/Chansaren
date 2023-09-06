@@ -1,5 +1,8 @@
 #include "Table.h"
 
+#define MAX_CARDS_PER_ROUND 3
+#define COMA_ROUNDS 3
+
 std::vector<Player>& Table::getPlayers() {
 	return m_players;
 }
@@ -105,21 +108,26 @@ std::ostream& operator<<(std::ostream& os, const Table& table) {
 	os << "the table has " << table.m_playerCount << " players" << endl;
 	os << "the cards on the table are: " << endl;
 	for (int i = 0; i < table.m_onTheTable.size()-1;i++) {
-		os << "player has: " << table.m_players.at(i).getDeckSize() << " cards" << endl;
+		os << "player has: " << table.m_players.at(i).getDeckSize() << " cards and player is ";
+		if (table.m_players.at(i).getLivingStatus()) os << "alive." << endl;
+		else os << "dead." << endl;
 		os << table.m_onTheTable.at(i) << endl << endl;
 	}
-	os << "player has: " << table.m_players.at(table.m_onTheTable.size() - 1).getDeckSize() << " cards" << endl;
+	os << "player has: " << table.m_players.at(table.m_onTheTable.size() - 1).getDeckSize() << " cards and player is ";
+	if (table.m_players.at(table.m_players.size() - 1).getLivingStatus()) os << "alive." << endl;
+	else os << "dead." << endl;
 	os << table.m_onTheTable.at(table.m_onTheTable.size() - 1);
 	return os;
 }
+
 void Table::stepTable(bool printTable = true) {
-	int numberOfCards;
+	int numberOfCards = 0;
 	std::cout << "Enter number of cards: ";
 	std::cout.flush();
-	while (!(std::cin >> numberOfCards)) {
+	while (!(std::cin >> numberOfCards) || numberOfCards > MAX_CARDS_PER_ROUND || numberOfCards <= 0) {
 		std::cin.clear();
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore the invalid input
-		std::cout << "Enter a valid number!" << std::endl;
+		std::cout << "Enter a valid number, you can only enter a number from 1 to "<< MAX_CARDS_PER_ROUND <<"!" << std::endl;
 		std::cout << "Enter number of cards: ";
 		std::cout.flush();
 	}
@@ -128,9 +136,11 @@ void Table::stepTable(bool printTable = true) {
 
 void Table::nextRound(bool printTable, int numberOfCards) {
 	for (int i = 0; i < m_playerCount; i++) {
-		Deck tempDeck;
-		m_players.at(i).layNFirstCards(tempDeck, numberOfCards);
-		m_onTheTable.at(i).recieveDeck(tempDeck);
+		if (m_players.at(i).getLivingStatus()) {
+			Deck tempDeck;
+			m_players.at(i).layNFirstCards(tempDeck, numberOfCards);
+			m_onTheTable.at(i).recieveDeck(tempDeck);
+		}
 	}
 
 	//std::cout << *this << endl;
@@ -155,14 +165,29 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 	else if (winnerIndexes.size() == 0) {
 		cout << "no winners found: " << endl;
 		winnerIndexes = checkWinner();
+		cerr << "this is not suposed to happen" << endl;
+		cout << "TODO throw a nice error" << endl; //TODO this isnt suposed to happen so throw a nice error
+		for (int i = 0; i < m_playerCount; i++) {
+			m_onTheTable.at(i).clearCards();
+		}
 	}
 	else {
 		cout << "a draw occured between players: " << endl;
 		for (int index : winnerIndexes) {
 			cout << "player: " << m_players.at(index).getName() << endl;
 		}
+		Deck collected;
+		for (int i = 0; i < m_playerCount; i++) {
+			collected.mergeBack(m_onTheTable.at(i).getCards());
+		}
+		m_players.at(winnerIndexes.at(0)).recieveDeck(collected);
+		cout << "TODO ask players for a new card" << endl; //TODO ask players for a extra card and recheck the rules
+		for (int i = 0; i < m_playerCount; i++) {
+			m_onTheTable.at(i).clearCards();
+		}
 	}
 	//std::cout << *this << endl;
+	checkForDeadPlayers();
 }
 
 /*
@@ -287,4 +312,45 @@ void Table::takeTopCardFromOpponents(int my_index) {
 		}
 	}
 	ik.getCards().mergeFront(afleg);
+}
+
+
+bool Table::checkGameOver() {
+	int alive_players = 0;
+	for (Player& player : m_players) {
+		if (player.getLivingStatus()) alive_players++;
+	}
+	return alive_players == 1;
+}
+
+Player& Table::giveWinner() {
+	for (Player& player : m_players) {
+		if (player.getLivingStatus()) return player;
+	}
+}
+
+/*
+void Table::checkForDeadPlayers() {
+	for (Player& player : m_players) {
+		if (player.getDeckSize() == 0) {
+			player.killPlayer();
+		}
+	}
+}
+*/
+
+void Table::checkForDeadPlayers() {
+	for (int i = 0; i < m_players.size(); ++i) {
+		if (m_players[i].getDeckSize() == 0 && m_players[i].getComaCount() >= COMA_ROUNDS) {
+			m_players.erase(m_players.begin() + i);  // Remove the dead player from m_players
+			m_onTheTable.erase(m_onTheTable.begin() + i);  // Remove the corresponding player from m_onTheTable
+			--m_playerCount;  // Decrement the player count
+			--i;  // Decrement the index to recheck the current position
+		}
+		else if (m_players[i].getDeckSize() == 0) {
+			m_players[i].IncreaseComaCount();
+		}else {
+			m_players[i].resetComaCount();
+		}
+	}
 }

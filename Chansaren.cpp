@@ -8,7 +8,7 @@
 using namespace std;
 
 int main(){
-	
+	/*
 	Deck deck;
 	Kaart kaart = Kaart(ACE, Spades);
 	deck.addCard(kaart);
@@ -24,6 +24,8 @@ int main(){
 	deck.addCard(kaart);
 	int i = askForCardIndex(deck);
 	cout << "the player choose: " << i << endl;
+	*/
+
 	/*
 	for (int i = 0; i < deck.numberOfCards(); i++) {
 		std::cout << deck.peekCardAtIndex(i) << std::endl;
@@ -34,15 +36,23 @@ int main(){
 	}
 	*/
 
-	
-	//Table table;
-	//std::vector<string> names = {"tybo", "jarno", "mathis"};
-	//Table table = Table(names, 1);
-	/*
-	while (true) {
-		table.stepTable(true);
+	bool loop = true;
+	while (loop) {
+		//Table table;
+		std::vector<string> names = { "tybo", "jarno", "mathis" };
+		Table table = Table(names, 1);
+		int round = 0;
+
+		while (!table.checkGameOver()) {
+			cout << "round " << round++ << " started" << endl;
+			//table.stepTable(true);
+			table.nextRound(true, 3);
+		}
+		Player& winner = table.giveWinner();
+		cout << "the game is won by: " << winner.getName() << " this player has " << winner.getDeckSize() << " cards after " << round << " rounds" << endl;
 	}
-	*/
+
+	
 
 	/*
 	cout << table.getPlayers().at(0) << endl;

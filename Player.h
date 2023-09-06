@@ -6,8 +6,14 @@ using namespace std;
 class Player {
 	string m_name = "";
 	Deck m_cards;
+	bool m_in_live = true;
+	int m_comaRounds = 0;
 public:
 	int getDeckSize() const;
+	bool getLivingStatus() const { return m_in_live; }
+	int getComaCount() const { return m_comaRounds; }
+	void IncreaseComaCount() { m_comaRounds++; }
+	void resetComaCount() { m_comaRounds = 0; }
 	Deck& getCards();
 	Deck* getCardsPointer();
 	std::string getName();
@@ -20,4 +26,5 @@ public:
 	void recieveCard(const Kaart& kaart);
 	void recieveDeck(const Deck& deck);
 	void swapDecks(Player& other);
+	void killPlayer() { m_in_live = false; }
 };
