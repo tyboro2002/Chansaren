@@ -8,7 +8,7 @@
 using namespace std;
 
 int main(){
-	/*
+	
 	Deck deck;
 	Kaart kaart = Kaart(ACE, Spades);
 	deck.addCard(kaart);
@@ -20,8 +20,11 @@ int main(){
 	deck.addCard(kaart);
 	kaart = Kaart(SIX, Spades);
 	deck.addCard(kaart);
-	//kaart = Kaart(FOUR, Diamonds);
-	//deck.addCard(kaart);
+	kaart = Kaart(FOUR, Diamonds);
+	deck.addCard(kaart);
+	int i = askForCardIndex(deck);
+	cout << "the player choose: " << i << endl;
+	/*
 	for (int i = 0; i < deck.numberOfCards(); i++) {
 		std::cout << deck.peekCardAtIndex(i) << std::endl;
 	}
@@ -33,8 +36,14 @@ int main(){
 
 	
 	//Table table;
-	std::vector<string> names = {"tybo", "jarno", "mathis"};
-	Table table = Table(names, 1);
+	//std::vector<string> names = {"tybo", "jarno", "mathis"};
+	//Table table = Table(names, 1);
+	/*
+	while (true) {
+		table.stepTable(true);
+	}
+	*/
+
 	/*
 	cout << table.getPlayers().at(0) << endl;
 	cout << table.getPlayers().at(1) << endl;
@@ -48,10 +57,6 @@ int main(){
 	//cout << table << endl;
 	//table.nextRound(true, 3);
 	//table.nextRound(true, 3);
-
-	while (true) {
-		table.stepTable(true);
-	}
 
 	/*
 	while (true) {

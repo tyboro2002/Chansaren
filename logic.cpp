@@ -177,3 +177,20 @@ bool checkTripleSix(const Deck& deck) {
 	}
 	return six >= 3;
 }
+
+
+int askForCardIndex(const Deck& deck) {
+	int index;
+	for (int i = 0; i < deck.numberOfCards(); i++) {
+		cout << i << ") " << deck.peekCardAtIndex(i) << endl;
+	}
+	cout << "what index do you want?: ";
+	std::cout.flush();
+	while (!(std::cin >> index) || index >= deck.numberOfCards() || index<0) {
+		std::cin.clear();
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore the invalid input
+		std::cout << "what index do you want?: ";
+		std::cout.flush();
+	}
+	return index;
+}
