@@ -169,6 +169,10 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 * check the rules and ask and aply them until nothing more needed
 */
 void Table::checkRules(int sevensNeeded) {
+	for (int i = 0; i < m_playerCount; i++) {
+		Deck& stapel = m_onTheTable.at(i).getCards();
+		if (checkTripleSix(stapel)) killAlHumansOfOpponents(m_onTheTable, i); //TODO make that when 2 players have 3 sixes that they both keep humans
+	}
 	if (checkMoreThanNSeven(m_onTheTable, sevensNeeded)) {
 		//useTwoSevens(m_onTheTable);
 		cout << "double seven occured looping the decks" << endl;
@@ -187,6 +191,15 @@ void Table::checkRules(int sevensNeeded) {
 					break;
 				}
 			}
+		}
+	}
+
+	for (int i = 0; i < m_playerCount; i++) {
+		Deck& tafelStapel = m_onTheTable.at(i).getCards();
+		int jacks = countJacks(tafelStapel);
+		while (jacks) {
+			takeTopCardFromOpponents(i);
+			jacks--;
 		}
 	}
 	//TODO
@@ -263,4 +276,15 @@ const vector<int> Table::checkWinner() {
 		}
 		return winnerVector;
 	}
+}
+
+void Table::takeTopCardFromOpponents(int my_index) {
+	Player& ik = m_players.at(my_index);
+	Deck afleg;
+	for (int i = 0; i < m_playerCount; i++) {
+		if (i != my_index) {
+			m_players.at(i).layNFirstCards(afleg, 1);
+		}
+	}
+	ik.getCards().mergeFront(afleg);
 }

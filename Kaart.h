@@ -89,6 +89,7 @@ public:
 	void addCard(const Kaart& card);
 	void clearDeck();
 	void mergeBack(const Deck& otherDeck);
+	void mergeFront(const Deck& otherDeck);
 
 	const int numberOfCards() const;
 	const int calculateValue() const;

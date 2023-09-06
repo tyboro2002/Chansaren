@@ -138,9 +138,17 @@ void Deck::clearDeck() {
 * mergeBack 2 decks into 1 deck (merging in the first deck)
 */
 void Deck::mergeBack(const Deck& otherDeck) {
-	Deck tempDeck = otherDeck;
-	for (int i = 0; i < tempDeck.m_cards.size(); i++) {
-		m_cards.push_back(tempDeck.m_cards.at(i));
+	for (int i = 0; i < otherDeck.m_cards.size(); i++) {
+		m_cards.push_back(otherDeck.m_cards.at(i));
+	}
+}
+
+/*
+* mergeFront 2 decks into 1 deck (merging in the first deck)
+*/
+void Deck::mergeFront(const Deck& otherDeck) {
+	for (int i = 0; i < otherDeck.m_cards.size(); i++) {
+		m_cards.push_front(otherDeck.m_cards.at(i));
 	}
 }
 

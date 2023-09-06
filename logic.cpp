@@ -17,14 +17,6 @@ bool checkMoreThanNSeven(std::vector<Player> m_players, int n) {
 	return sevens >= n;
 }
 
-bool checkTripleSix(const Deck& deck) {
-	int six = 0;
-	for (int i = 0; i < deck.numberOfCards(); i++) {
-		if (deck.peekCardAtIndex(i).getValue() == 7) six++;
-	}
-	return six >= 3;
-}
-
 int getDoubleCount(const Deck& deck) {
 	int doubles = 0;
 	std::vector<Kaart> cards;

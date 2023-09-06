@@ -35,6 +35,7 @@ int main(){
 	//Table table;
 	std::vector<string> names = {"tybo", "jarno", "mathis"};
 	Table table = Table(names, 1);
+	/*
 	cout << table.getPlayers().at(0) << endl;
 	cout << table.getPlayers().at(1) << endl;
 	cout << table.getPlayers().at(2) << endl << endl << endl;
@@ -42,13 +43,19 @@ int main(){
 	cout << table.getPlayers().at(0) << endl;
 	cout << table.getPlayers().at(1) << endl;
 	cout << table.getPlayers().at(2) << endl;
+	*/
+
 	//cout << table << endl;
 	//table.nextRound(true, 3);
 	//table.nextRound(true, 3);
 
+	while (true) {
+		table.stepTable(true);
+	}
+
 	/*
 	while (true) {
-		Table table = Table(names, 1);
+		table = Table(names, 1);
 		//table.stepTable(true);
 		table.nextRound(true,3);
 		//cout << "this should print empty table" << endl;
