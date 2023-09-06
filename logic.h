@@ -7,12 +7,12 @@
 * // implemented
 * 2==> verdubele
 * dubbele 7==> pakjes wiselen
-* 
-* // not yet implemented
 * zot ==> kaart bove pak
 * 3 zesen ==> alle personen dood van de andere personen
-* enkel aas ==> zekere winst
 * kleinst opeenvolgend==> wine
+* enkel aas ==> zekere winst
+* 
+* // not yet implemented
 * dubbele ==> kaart
 * heer en dame==> extra kaarte
 */
