@@ -6,9 +6,9 @@
 /*
 * // implemented
 * 2==> verdubele
+* dubbele 7==> pakjes wiselen
 * 
 * // not yet implemented
-* dubbele 7==> pakjes wiselen
 * zot ==> kaart bove pak
 * 3 zesen ==> alle personen dood van de andere personen
 * enkel aas ==> zekere winst
@@ -17,8 +17,7 @@
 * heer en dame==> extra kaarte
 */
 bool checkOnlyAce(const Deck& deck);
-bool checkDoubleSeven(std::vector<Player> m_players);
-//void useTwoSevens(std::vector<Player>& m_players);
+bool checkMoreThanNSeven(std::vector<Player> m_players, int n);
 int getDoubleCount(const Deck& deck);
 bool checkAllConsecutive(const Deck& deck);
 int countJacks(const Deck& deck);
@@ -27,3 +26,5 @@ int lowestVal(const Deck& deck);
 bool checkAllSingle(std::vector<Player> m_players);
 bool checkAllSingleAndFollowingUp(std::vector<Player> m_players);
 void loopDecks(std::vector<Player>& players, bool clockwise);
+void killAlHumansOfOpponents(std::vector<Player>& players, int my_index);
+bool checkTripleSix(const Deck& deck);

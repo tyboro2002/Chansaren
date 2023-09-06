@@ -339,3 +339,22 @@ void Deck::layCardOnIndex(Kaart& kaart, const int index) {
 	Kaart* onderlegger = getCardAtIndex(index);
 	onderlegger->layCardOnTop(kaart);
 }
+
+/*
+* filter all cards out with the value
+*/
+void Deck::filterValue(const int value) {
+	// Use an iterator to traverse the cards in the deck
+	auto it = m_cards.begin();
+
+	while (it != m_cards.end()) {
+		// Check if the card's value matches the specified value
+		if (it->getValue() == value) {
+			//remove the card from the deck
+			it = m_cards.erase(it);
+		}
+		else {
+			++it; // Move to the next card
+		}
+	}
+}

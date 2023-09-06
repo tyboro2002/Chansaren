@@ -20,6 +20,13 @@ std::ostream& operator<<(std::ostream& os, const Player& player) {
 }
 
 /*
+* returns the size of the players deck
+*/
+int Player::getDeckSize() const {
+	return m_cards.numberOfCards();
+}
+
+/*
 * return the cards deck of the player
 */
 Deck& Player::getCards() {

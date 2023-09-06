@@ -18,8 +18,8 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, const Table& table);
 	void stepTable(bool printTable);
 	void nextRound(bool printTable = true, int numberOfCards = 1);
-	std::vector<Player> getPlayers();
+	std::vector<Player>& getPlayers();
 private:
-	void checkRules();
+	void checkRules(int sevensNeeded = 2);
 	const vector<int> checkWinner();
 };

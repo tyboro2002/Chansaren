@@ -1,6 +1,6 @@
 #include "Table.h"
 
-std::vector<Player> Table::getPlayers() {
+std::vector<Player>& Table::getPlayers() {
 	return m_players;
 }
 
@@ -105,8 +105,10 @@ std::ostream& operator<<(std::ostream& os, const Table& table) {
 	os << "the table has " << table.m_playerCount << " players" << endl;
 	os << "the cards on the table are: " << endl;
 	for (int i = 0; i < table.m_onTheTable.size()-1;i++) {
-		os << table.m_onTheTable.at(i) << endl;
+		os << "player has: " << table.m_players.at(i).getDeckSize() << " cards" << endl;
+		os << table.m_onTheTable.at(i) << endl << endl;
 	}
+	os << "player has: " << table.m_players.at(table.m_onTheTable.size() - 1).getDeckSize() << " cards" << endl;
 	os << table.m_onTheTable.at(table.m_onTheTable.size() - 1);
 	return os;
 }
@@ -132,14 +134,14 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 	}
 
 	//std::cout << *this << endl;
-	if (printTable) std::cout << *this << endl << endl;
+	//if (printTable) std::cout << *this << endl << endl;
 	checkRules();
 
 	if (printTable) std::cout << *this << endl;
 	vector<int> winnerIndexes = checkWinner();
 
 	if (winnerIndexes.size() == 1) {
-		cout << "the player named: " << m_players.at(winnerIndexes.at(0)).getName() << " won this round." << endl;
+		cout << "the player named: " << m_players.at(winnerIndexes.at(0)).getName() << " won this round." << endl << endl;
 		int winnerIndex = winnerIndexes.at(0);
 		Deck collected;
 		for (int i = 0; i < m_playerCount; i++) {
@@ -166,12 +168,12 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 /*
 * check the rules and ask and aply them until nothing more needed
 */
-void Table::checkRules() {
-	if (checkDoubleSeven(m_onTheTable) && false) {
+void Table::checkRules(int sevensNeeded) {
+	if (checkMoreThanNSeven(m_onTheTable, sevensNeeded)) {
 		//useTwoSevens(m_onTheTable);
 		cout << "double seven occured looping the decks" << endl;
 		loopDecks(m_onTheTable, true);
-		checkRules();
+		checkRules(sevensNeeded+2);
 	}
 	for (int i = 0; i < m_playerCount; i++) {
 		int unusedTwo = countNotUsedTwo(m_onTheTable.at(i).getCardsPointer());
@@ -181,7 +183,7 @@ void Table::checkRules() {
 				if (tafelStapel->peekCardAtIndex(k).getValue() == 2 && tafelStapel->peekCardAtIndex(k).cardOnTop() == false) {
 					tafelStapel->addCard(m_players.at(i).getCardsPointer()->popFirst());
 					tafelStapel->layCardOnIndex(tafelStapel->peekCardAtIndexNonConst(tafelStapel->numberOfCards()-1), k);
-					checkRules();
+					checkRules(sevensNeeded);
 					break;
 				}
 			}

@@ -109,6 +109,7 @@ public:
 	void popNLast(Deck& fullDeck, int number_of_cards);
 	void popNFirst(Deck& fullDeck, int number_of_cards);
 
+	void filterValue(const int value);
 	void splitDeckIntoNDecks(std::vector<Deck>* decks);
 	void replaceCardAtIndex(const int index, Kaart& kaart);
 	void layCardOnIndex(Kaart& kaart, const int index);

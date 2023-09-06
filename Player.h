@@ -7,6 +7,7 @@ class Player {
 	string m_name = "";
 	Deck m_cards;
 public:
+	int getDeckSize() const;
 	Deck& getCards();
 	Deck* getCardsPointer();
 	std::string getName();

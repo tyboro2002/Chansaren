@@ -6,7 +6,7 @@ bool checkOnlyAce(const Deck& deck){
 	return true;
 }
 
-bool checkDoubleSeven(std::vector<Player> m_players) {
+bool checkMoreThanNSeven(std::vector<Player> m_players, int n) {
 	int sevens = 0;
 	for (Player player : m_players) {
 		Deck playerDeck = player.getCards();
@@ -14,24 +14,8 @@ bool checkDoubleSeven(std::vector<Player> m_players) {
 			if (playerDeck.peekCardAtIndex(i).getValue() == 7/* && playerDeck.peekCardAtIndex(i).getUsed() == false*/) sevens++;
 		}
 	}
-	return sevens >= 2;
+	return sevens >= n;
 }
-
-/*
-void useTwoSevens(std::vector<Player>& m_players) {
-	int todo = 2;
-	for (Player player : m_players) {
-		Deck* playerDeck = player.getCardsPointer();
-		for (int i = 0; i < playerDeck->numberOfCards(); i++) {
-			if (playerDeck->peekCardAtIndex(i).getValue() == 7 && playerDeck->peekCardAtIndex(i).getUsed() == false && todo > 0) {
-				playerDeck->getCardAtIndex(i)->useCard();
-				todo--;
-			}
-			if (todo == 0) break;
-		}
-	}
-}
-*/
 
 bool checkTripleSix(const Deck& deck) {
 	int six = 0;
@@ -179,4 +163,25 @@ void loopDecks(std::vector<Player>& players, bool clockwise) {
 			players.at(i).swapDecks(players.at(i-1));
 		}
 	}
+}
+
+void killAlHumansOfOpponents(std::vector<Player>& players, int my_index) {
+	int i = 0;
+	for (Player& player : players) {
+		if (i != my_index) {
+			Deck& playerDeck = player.getCards();
+			playerDeck.filterValue(JACK);
+			playerDeck.filterValue(QUEEN);
+			playerDeck.filterValue(KING);
+		}
+		i++;
+	}
+}
+
+bool checkTripleSix(const Deck& deck) {
+	int six = 0;
+	for (int i = 0; i < deck.numberOfCards(); i++) {
+		if (deck.peekCardAtIndex(i).getValue() == SIX) six++;
+	}
+	return six >= 3;
 }
