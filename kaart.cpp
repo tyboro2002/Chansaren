@@ -3,14 +3,6 @@
 const std::vector<std::string> Kaart::unicode_chars{ "♠", "♥", "♣", "◆" };
 
 /*
- 	try {
-	}
-	catch (...) {
-		std::cout << "popNFirst failed" << std::endl;
-	}
-*/
-
-/*
 * Assignment operator overload
 */
 Kaart& Kaart::operator=(const Kaart& other) {
