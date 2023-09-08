@@ -69,10 +69,16 @@ Player::Player(const string& m_name, const Deck& m_cards) {
 	this->m_cards = m_cards;
 }
 
+/*
+* add a card to the players deck
+*/
 void Player::recieveCard(const Kaart& kaart) {
 	m_cards.addCard(kaart);
 }
 
+/*
+* add the cards from a deck to the players deck
+*/
 void Player::recieveDeck(const Deck& deck) {
 	for (int i = 0; i < deck.numberOfCards(); i++) {
 		m_cards.addCard(deck.peekCardAtIndex(i));

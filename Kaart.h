@@ -11,7 +11,8 @@ enum Symbol {
 	Spades = 0,
 	Hearts,
 	Clubs,
-	Diamonds
+	Diamonds,
+	Invalid
 };
 
 enum Colour {
@@ -44,7 +45,7 @@ class Kaart {
 	//bool m_used = false;
 	//Kaart* m_on_top = nullptr;
 public:
-	Kaart() : m_value(NOTHING), m_symbol(Hearts), m_kleur(R), m_multiplier(1) {}
+	Kaart() : m_value(NOTHING), m_symbol(Invalid), m_kleur(R), m_multiplier(1) {}
 	Kaart(Number number, Symbol symbol) : m_value(number), m_symbol(symbol), m_kleur((Colour)(symbol%2)), m_multiplier(1) {}
 	Kaart(Number number, Symbol symbol, int multiplier) : m_value(number), m_symbol(symbol), m_kleur((Colour)(symbol % 2)), m_multiplier(multiplier) {}
 	Kaart(Number number, Symbol symbol, Colour colour) : m_value(number), m_symbol(symbol), m_kleur(colour), m_multiplier(1) {}
@@ -56,6 +57,9 @@ public:
 	bool operator>(const Kaart& other) const;
 	bool operator<(const Kaart& other) const;
 	Kaart& operator=(const Kaart& other);
+	/*
+	* the symbols that will be printed with each card (corresponding symbol will be printed)
+	*/
 	static const std::vector<std::string> unicode_chars;
 	const int getValue() const;
 	const int getMultiplier() const;
@@ -102,7 +106,7 @@ public:
 
 	const Kaart & peekCardAtIndex(const int index) const;
 	Kaart& peekCardAtIndexNonConst(const int index);
-	Kaart* getCardAtIndex(const int index);
+	Kaart& getCardAtIndex(const int index);
 	const Kaart & peekFirst();
 	const Kaart & peekLast();
 	const Kaart & popFirst();

@@ -37,6 +37,7 @@ int main(){
 	*/
 
 	bool loop = true;
+
 	while (loop) {
 		//Table table;
 		std::vector<string> names = { "tybo", "jarno", "mathis" };
@@ -50,6 +51,7 @@ int main(){
 		}
 		Player& winner = table.giveWinner();
 		cout << "the game is won by: " << winner.getName() << " this player has " << winner.getDeckSize() << " cards after " << round << " rounds" << endl;
+		//loop = false;
 	}
 
 	

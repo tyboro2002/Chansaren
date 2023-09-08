@@ -2,7 +2,17 @@
 
 const std::vector<std::string> Kaart::unicode_chars{ "♠", "♥", "♣", "◆" };
 
-// Assignment operator overload
+/*
+ 	try {
+	}
+	catch (...) {
+		std::cout << "popNFirst failed" << std::endl;
+	}
+*/
+
+/*
+* Assignment operator overload
+*/
 Kaart& Kaart::operator=(const Kaart& other) {
     if (this == &other) {
         return *this; // Avoid self-assignment
@@ -11,25 +21,20 @@ Kaart& Kaart::operator=(const Kaart& other) {
     m_value = other.m_value;
     m_symbol = other.m_symbol;
     m_kleur = other.m_kleur;
-
-   // if (other.m_on_top.has_value()) {
-   //     // If 'other' has a card on top, copy it to 'this'
-   //     m_on_top = other.m_on_top.value();
-   // } else {
-   //     // If 'other' doesn't have a card on top, clear 'm_on_top' in 'this'
-   //     m_on_top.reset();
-   // }
-
+	m_multiplier = other.m_multiplier; //TODO test if correct
     return *this;
 }
 
 /*
 * print a card to the output stream
 */
-std::ostream& operator<<(std::ostream& os, const Kaart& kaart) {
-	const std::vector<std::string> symbool{ "Spades","Hearts","Clubs","Diamonds"};
-	const std::vector<std::string> nummer{"ACE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN","JACK","QUEEN","KING"};
-	os << symbool[kaart.m_symbol] << " " << nummer[kaart.m_value-1];
+std::ostream& operator<<(std::ostream& os, const Kaart& kaart) { //TODO fix to print unicode chars
+	const std::vector<std::string> symbool{ "Spades","Hearts","Clubs","Diamonds", "Invalid"};
+	const std::vector<std::string> nummer{"Nothing","ACE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN","JACK","QUEEN","KING"};
+	os << symbool[kaart.m_symbol] << " " << nummer[kaart.m_value];
+	if (kaart.getValue() == NOTHING) {
+		std::cout << "ei da mag nie" << std::endl;
+	}
 	if (kaart.isOnTopOfCard()) {
 		os << " has the Multiplier: " << kaart.getMultiplier();
 	}
@@ -101,17 +106,15 @@ const Symbol Kaart::getSymbol() const {
 	return m_symbol;
 }
 
-bool Kaart::cardOnTop() const {
-	//return m_on_top != nullptr;
-	//return m_on_top.has_value();
-	return m_multiplier == 0;
-}
+/*
+* check if a card has another card on top of it
+*/
+bool Kaart::cardOnTop() const {return m_multiplier == 0;}
 
-bool Kaart::isOnTopOfCard() const {
-	//return m_on_top != nullptr;
-	//return m_on_top.has_value();
-	return m_multiplier >= 2;
-}
+/*
+* check if a card is on top of another card
+*/
+bool Kaart::isOnTopOfCard() const {return m_multiplier >= 2;}
 
 
 /****************************************************
@@ -154,6 +157,7 @@ void Deck::mergeFront(const Deck& otherDeck) {
 
 /*
 * peek the card at the index (dont remove it)
+* return a const kaart reference
 */
 const Kaart& Deck::peekCardAtIndex(const int index) const{
 	return m_cards.at(index);
@@ -161,6 +165,7 @@ const Kaart& Deck::peekCardAtIndex(const int index) const{
 
 /*
 * peek the card at the index (dont remove it)
+* return a kaart reference
 */
 Kaart& Deck::peekCardAtIndexNonConst(const int index) {
 	return m_cards.at(index);
@@ -169,8 +174,8 @@ Kaart& Deck::peekCardAtIndexNonConst(const int index) {
 /*
 * get the card at the index (dont remove it)
 */
-Kaart* Deck::getCardAtIndex(const int index){
-	return &m_cards.at(index);
+Kaart& Deck::getCardAtIndex(const int index){
+	return m_cards.at(index);
 }
 
 /*
@@ -215,6 +220,9 @@ const Kaart& Deck::popLast() {
 	return temp;
 }
 
+/*
+* assignement operator for a deck
+*/
 Deck& Deck::operator=(const Deck& other) {
 	if (this == &other) {
 		return *this; // Avoid self-assignment
@@ -246,7 +254,7 @@ const int Deck::calculateValue() const{
 * pop the cards at the n last index (remove it)
 */
 void Deck::popNLast(Deck& fullDeck, int number_of_cards = 1) {
-	for(int i = 0; i < number_of_cards; i++){
+	for (int i = 0; i < number_of_cards; i++) {
 		if (m_cards.size() > 0) fullDeck.addCard(popLast());
 	}
 }
@@ -256,7 +264,7 @@ void Deck::popNLast(Deck& fullDeck, int number_of_cards = 1) {
 */
 void Deck::popNFirst(Deck& fullDeck, int number_of_cards = 1) {
 	for (int i = 0; i < number_of_cards; i++) {
-		if(m_cards.size() > 0) fullDeck.addCard(popFirst());
+		if (m_cards.size() > 0) fullDeck.addCard(popFirst());
 	}
 }
 
@@ -344,8 +352,8 @@ void Deck::replaceCardAtIndex(const int index, Kaart& kaart) {
 * lay a card on the indexed card
 */
 void Deck::layCardOnIndex(Kaart& kaart, const int index) {
-	Kaart* onderlegger = getCardAtIndex(index);
-	onderlegger->layCardOnTop(kaart);
+	Kaart& onderlegger = getCardAtIndex(index);
+	onderlegger.layCardOnTop(kaart);
 }
 
 /*

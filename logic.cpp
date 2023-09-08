@@ -1,11 +1,17 @@
 #include "logic.h"
 
+/*
+* check if a deck only has 1 card and that card is an ace
+*/
 bool checkOnlyAce(const Deck& deck){
 	if (deck.numberOfCards() != 1) return false;
 	if (deck.peekCardAtIndex(0).getValue() != 1) return false;
 	return true;
 }
 
+/*
+* check if there are more than n sevens on the total table
+*/
 bool checkMoreThanNSeven(std::vector<Player> m_players, int n) {
 	int sevens = 0;
 	for (Player player : m_players) {
@@ -17,6 +23,10 @@ bool checkMoreThanNSeven(std::vector<Player> m_players, int n) {
 	return sevens >= n;
 }
 
+/*
+* count the amount of double cards
+* (a double card is a card that has another card with the same value in the deck)
+*/
 int getDoubleCount(const Deck& deck) {
 	int doubles = 0;
 	std::vector<Kaart> cards;
@@ -44,6 +54,9 @@ int getDoubleCount(const Deck& deck) {
 	return doubles;
 }
 
+/*
+* check if all cards are following on each other
+*/
 bool checkAllConsecutive(const Deck& deck) {
 	if (deck.numberOfCards() <= 1) return false;
 	int doubles = 0;
@@ -72,6 +85,11 @@ bool checkAllConsecutive(const Deck& deck) {
 	return true;
 }
 
+/*
+* count the amount of jacks
+* return 0 if none found
+* return amount if there are found
+*/
 int countJacks(const Deck& deck) {
 	int jacks = 0;
 	for (int i = 0; i < deck.numberOfCards(); i++) {
@@ -80,6 +98,9 @@ int countJacks(const Deck& deck) {
 	return jacks;
 }
 
+/*
+* count all cards with the value 2 that not have multiplier 0
+*/
 int countNotUsedTwo(const Deck* deck) {
 	int two = 0;
 	for (int i = 0; i < deck->numberOfCards(); i++) {
@@ -88,6 +109,9 @@ int countNotUsedTwo(const Deck* deck) {
 	return two;
 }
 
+/*
+* returns the lowest value of a card in the deck
+*/
 int lowestVal(const Deck& deck) {
 	int doubles = 0;
 	std::vector<Kaart> cards;
@@ -107,6 +131,9 @@ int lowestVal(const Deck& deck) {
 	return cards[0].getValue();
 }
 
+/*
+* check if all players have only 1 card on the table
+*/
 bool checkAllSingle(std::vector<Player> m_players) {
 	for (int i = 0; i < m_players.size(); i++) {
 		if (m_players.at(i).getCards().numberOfCards() != 1) return false;
@@ -114,6 +141,9 @@ bool checkAllSingle(std::vector<Player> m_players) {
 	return true;
 }
 
+/*
+* check if all players have only 1 card on the table and all these cards are following on each other 
+*/
 bool checkAllSingleAndFollowingUp(std::vector<Player> m_players) {
 	if (!checkAllSingle(m_players)) return false;
 	Deck stapel;
@@ -144,6 +174,9 @@ void loopDecks(std::vector<Player>& players, bool clockwise) {
 	}
 }
 
+/*
+* kill all cards that are Jack, Queen, King in all decks on the table except in yours
+*/
 void killAlHumansOfOpponents(std::vector<Player>& players, int my_index) {
 	int i = 0;
 	for (Player& player : players) {
@@ -157,6 +190,9 @@ void killAlHumansOfOpponents(std::vector<Player>& players, int my_index) {
 	}
 }
 
+/*
+* check if there are 3 or more cards with a value of 6 in your deck
+*/
 bool checkTripleSix(const Deck& deck) {
 	int six = 0;
 	for (int i = 0; i < deck.numberOfCards(); i++) {
@@ -165,7 +201,11 @@ bool checkTripleSix(const Deck& deck) {
 	return six >= 3;
 }
 
-
+/*
+* ask the player for the index of a card in there deck
+* returns the index of the card
+* (uses some checks so this function cant return invalid values)
+*/
 int askForCardIndex(const Deck& deck) {
 	int index;
 	for (int i = 0; i < deck.numberOfCards(); i++) {

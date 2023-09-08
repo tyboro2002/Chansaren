@@ -3,10 +3,17 @@
 #define MAX_CARDS_PER_ROUND 3
 #define COMA_ROUNDS 3
 
+/*
+* returns the player vector of the table
+* (the vector of the players with the cards they have in their hand not the one with the cards they have on the table)
+*/
 std::vector<Player>& Table::getPlayers() {
 	return m_players;
 }
 
+/*
+* initialise a table
+*/
 Table::Table() {
 	int number_of_players;
 	std::cout << "Enter number of participants: ";
@@ -14,7 +21,6 @@ Table::Table() {
 	while (!(std::cin >> number_of_players)) {
 		std::cin.clear();
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Ignore the invalid input
-		//std::cin >> std::ws;
 		std::cout << "Enter a valid number!" << std::endl;
 		std::cout << "Enter number of participants: ";
 		std::cout.flush();
@@ -78,13 +84,16 @@ Table::Table() {
 	*/
 }
 
-
+/*
+* initiate a table with players with the names given in the names vector
+* use number_of_decks decks (52 cards) to distribute
+*/
 Table::Table(std::vector<string> names, const int number_of_decks = 1) {
 	m_playerCount = names.size();
 	for (string str : names) {
 		Player speler = Player(str);
 		m_players.push_back(speler);
-		m_onTheTable.push_back(speler); //TODO test if this is posible or other player needs to be maked
+		m_onTheTable.push_back(speler);
 	}
 	Deck fullDeck;
 	Deck::full(&fullDeck, number_of_decks);
@@ -93,11 +102,6 @@ Table::Table(std::vector<string> names, const int number_of_decks = 1) {
 	for (int i = 0; i < m_playerCount; i++) {
 		m_players.at(i).recieveDeck(decks.at(i));
 	}
-	/*
-	for (Player player : m_players) {
-		std::cout << player << endl;
-	}
-	*/
 }
 
 
@@ -120,6 +124,9 @@ std::ostream& operator<<(std::ostream& os, const Table& table) {
 	return os;
 }
 
+/*
+* ask the players how many cards they want to be layed on the table this round and lays them on the table
+*/
 void Table::stepTable(bool printTable = true) {
 	int numberOfCards = 0;
 	std::cout << "Enter number of cards: ";
@@ -134,6 +141,10 @@ void Table::stepTable(bool printTable = true) {
 	nextRound(printTable, numberOfCards);
 }
 
+/*
+* lays numberOfCards cards on the table for each player
+* when the player hasnt enough cards there just are less cards in his deck
+*/
 void Table::nextRound(bool printTable, int numberOfCards) {
 	for (int i = 0; i < m_playerCount; i++) {
 		if (m_players.at(i).getLivingStatus()) {
@@ -303,6 +314,9 @@ const vector<int> Table::checkWinner() {
 	}
 }
 
+/*
+* take a card from the top of each players hand and lay it on top of the player at my_index's hand
+*/
 void Table::takeTopCardFromOpponents(int my_index) {
 	Player& ik = m_players.at(my_index);
 	Deck afleg;
@@ -314,7 +328,9 @@ void Table::takeTopCardFromOpponents(int my_index) {
 	ik.getCards().mergeFront(afleg);
 }
 
-
+/*
+* check if there is only 1 alive player
+*/
 bool Table::checkGameOver() {
 	int alive_players = 0;
 	for (Player& player : m_players) {
@@ -323,21 +339,17 @@ bool Table::checkGameOver() {
 	return alive_players == 1;
 }
 
+/*
+* returns the winner of the game
+* (returns the first alive player so when multiple players
+* are alive this function defaults to the first one found)
+*/
 Player& Table::giveWinner() {
 	for (Player& player : m_players) {
 		if (player.getLivingStatus()) return player;
 	}
 }
 
-/*
-void Table::checkForDeadPlayers() {
-	for (Player& player : m_players) {
-		if (player.getDeckSize() == 0) {
-			player.killPlayer();
-		}
-	}
-}
-*/
 
 void Table::checkForDeadPlayers() {
 	for (int i = 0; i < m_players.size(); ++i) {
