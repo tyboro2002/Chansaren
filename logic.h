@@ -29,3 +29,5 @@ void loopDecks(std::vector<Player>& players, bool clockwise);
 void killAlHumansOfOpponents(std::vector<Player>& players, int my_index);
 bool checkTripleSix(const Deck& deck);
 int askForCardIndex(const Deck& deck);
+int countValue(const Deck& deck, int value);
+int countValue(std::vector<Player>& players, int value);

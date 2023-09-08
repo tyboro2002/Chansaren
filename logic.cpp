@@ -222,3 +222,28 @@ int askForCardIndex(const Deck& deck) {
 	return index;
 }
 
+
+/*
+* count the amount of a card in a deck
+*/
+int countValue(const Deck& deck, int value) {
+	int am = 0;
+	for (int i = 0; i < deck.numberOfCards(); i++) {
+		if (deck.peekCardAtIndex(i).getValue() == value) am++;
+	}
+	return am;
+}
+
+/*
+* count the amount of a card on the table
+*/
+int countValue(std::vector<Player>& players, int value) {
+	int am = 0;
+	for (Player player : players) {
+		Deck& playerDeck = player.getCards();
+		for (int i = 0; i < playerDeck.numberOfCards(); i++) {
+			if (playerDeck.peekCardAtIndex(i).getValue() == value) am++;
+		}
+	}
+	return am;
+}
