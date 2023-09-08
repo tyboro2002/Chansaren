@@ -221,9 +221,11 @@ void Table::checkRules(int sevensNeeded) {
 			Deck* tafelStapel = m_onTheTable.at(i).getCardsPointer();
 			for (int k = 0; k < tafelStapel->numberOfCards(); k++) {
 				if (tafelStapel->peekCardAtIndex(k).getValue() == 2 && tafelStapel->peekCardAtIndex(k).cardOnTop() == false) {
-					tafelStapel->addCard(m_players.at(i).getCardsPointer()->popFirst());
-					tafelStapel->layCardOnIndex(tafelStapel->peekCardAtIndexNonConst(tafelStapel->numberOfCards()-1), k);
-					checkRules(sevensNeeded);
+					if (m_players.at(i).getDeckSize() > 0) { // make a player only lay a extra card on the 2 when it has cards
+						tafelStapel->addCard(m_players.at(i).getCardsPointer()->popFirst());
+						tafelStapel->layCardOnIndex(tafelStapel->peekCardAtIndexNonConst(tafelStapel->numberOfCards() - 1), k);
+						checkRules(sevensNeeded);
+					}
 					break;
 				}
 			}
@@ -363,6 +365,20 @@ void Table::checkForDeadPlayers() {
 			m_players[i].IncreaseComaCount();
 		}else {
 			m_players[i].resetComaCount();
+		}
+	}
+}
+
+/*
+* all the players whos index is in the vector will lay numberOfCards aditional cards on the table
+* only lays extra cards for the player if player is alive
+*/
+void Table::letIndexedPlayersLayExtraCard(std::vector<int> indexes, int numberOfCards) {
+	for (int i: indexes) {
+		if (m_players.at(i).getLivingStatus()) {
+			Deck tempDeck;
+			m_players.at(i).layNFirstCards(tempDeck, numberOfCards);
+			m_onTheTable.at(i).recieveDeck(tempDeck);
 		}
 	}
 }

@@ -26,4 +26,5 @@ private:
 	void takeTopCardFromOpponents(int my_index);
 	void checkRules(int sevensNeeded = 2);
 	const vector<int> checkWinner();
+	void letIndexedPlayersLayExtraCard(std::vector<int> indexes, int numberOfCards);
 };
