@@ -154,6 +154,7 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 		}
 	}
 
+	startOfTable:
 	//std::cout << *this << endl;
 	//if (printTable) std::cout << *this << endl << endl;
 	checkRules();
@@ -187,6 +188,9 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 		for (int index : winnerIndexes) {
 			cout << "player: " << m_players.at(index).getName() << endl;
 		}
+		letIndexedPlayersLayExtraCard(winnerIndexes, 1);
+		goto startOfTable;
+		/*
 		Deck collected;
 		for (int i = 0; i < m_playerCount; i++) {
 			collected.mergeBack(m_onTheTable.at(i).getCards());
@@ -196,6 +200,7 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 		for (int i = 0; i < m_playerCount; i++) {
 			m_onTheTable.at(i).clearCards();
 		}
+		*/
 	}
 	//std::cout << *this << endl;
 	checkForDeadPlayers();

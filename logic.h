@@ -16,6 +16,7 @@
 * dubbele ==> kaart
 * heer en dame==> extra kaarte
 */
+
 bool checkOnlyAce(const Deck& deck);
 bool checkMoreThanNSeven(std::vector<Player> m_players, int n);
 int getDoubleCount(const Deck& deck);
