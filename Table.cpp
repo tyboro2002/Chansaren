@@ -154,10 +154,10 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 		}
 	}
 
-	std::cout << *this << endl;
+	if (printTable) std::cout << *this << endl;
+	int sevensNeeded = 2;
 	startOfTable:
-	//if (printTable) std::cout << *this << endl << endl;
-	checkRules();
+	sevensNeeded = checkRules(sevensNeeded);
 
 	if (printTable) std::cout << *this << endl;
 	vector<int> winnerIndexes = checkWinner();
@@ -190,17 +190,6 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 		}
 		letIndexedPlayersLayExtraCard(winnerIndexes, 1);
 		goto startOfTable;
-		/*
-		Deck collected;
-		for (int i = 0; i < m_playerCount; i++) {
-			collected.mergeBack(m_onTheTable.at(i).getCards());
-		}
-		m_players.at(winnerIndexes.at(0)).recieveDeck(collected);
-		cout << "TODO ask players for a new card" << endl; //TODO ask players for a extra card and recheck the rules
-		for (int i = 0; i < m_playerCount; i++) {
-			m_onTheTable.at(i).clearCards();
-		}
-		*/
 	}
 	//std::cout << *this << endl;
 	checkForDeadPlayers();
@@ -208,11 +197,12 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 
 /*
 * check the rules and ask and aply them until nothing more needed
+* returns the amount of sevensNeeded
 */
-void Table::checkRules(int sevensNeeded) {
+int Table::checkRules(int sevensNeeded) {
 	for (int i = 0; i < m_playerCount; i++) {
 		Deck& stapel = m_onTheTable.at(i).getCards();
-		if (checkTripleSix(stapel)) killAllHumans(m_onTheTable); //TODO make that when 2 players have 3 sixes that they both keep humans
+		if (checkTripleSix(stapel)) killAllHumans(m_onTheTable);
 	}
 	if (checkMoreThanNSeven(m_onTheTable, sevensNeeded)) {
 		//useTwoSevens(m_onTheTable);
@@ -261,6 +251,7 @@ void Table::checkRules(int sevensNeeded) {
 		}
 	}
 	//TODO
+	return sevensNeeded;
 }
 
 
