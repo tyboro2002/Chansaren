@@ -107,6 +107,7 @@ public:
 	const Kaart & peekCardAtIndex(const int index) const;
 	Kaart& peekCardAtIndexNonConst(const int index);
 	Kaart& getCardAtIndex(const int index);
+	Kaart popIndexed(int index);
 	const Kaart & peekFirst();
 	const Kaart & peekLast();
 	const Kaart & popFirst();

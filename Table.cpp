@@ -154,8 +154,8 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 		}
 	}
 
+	std::cout << *this << endl;
 	startOfTable:
-	//std::cout << *this << endl;
 	//if (printTable) std::cout << *this << endl << endl;
 	checkRules();
 
@@ -218,7 +218,8 @@ void Table::checkRules(int sevensNeeded) {
 		//useTwoSevens(m_onTheTable);
 		cout << "double seven occured looping the decks" << endl;
 		loopDecks(m_onTheTable, true);
-		checkRules(sevensNeeded+2);
+		loopDecks(m_players, true);
+		return checkRules(sevensNeeded+2);
 	}
 	for (int i = 0; i < m_playerCount; i++) {
 		int unusedTwo = countNotUsedTwo(m_onTheTable.at(i).getCardsPointer());
@@ -229,11 +230,25 @@ void Table::checkRules(int sevensNeeded) {
 					if (m_players.at(i).getDeckSize() > 0) { // make a player only lay a extra card on the 2 when it has cards
 						tafelStapel->addCard(m_players.at(i).getCardsPointer()->popFirst());
 						tafelStapel->layCardOnIndex(tafelStapel->peekCardAtIndexNonConst(tafelStapel->numberOfCards() - 1), k);
-						checkRules(sevensNeeded);
+						return checkRules(sevensNeeded);
 					}
 					break;
 				}
 			}
+		}
+	}
+	for (int i = 0; i < m_playerCount; i++) {
+		int doubles = getDoubleCount(m_onTheTable.at(i).getCards());
+		while (doubles) {
+			for (int j = 0; j < m_playerCount; j++) {
+				if (j != i) {
+					cout << m_onTheTable.at(j).getName() << " giving to: " << m_onTheTable.at(i).getName() << endl;
+					int selectedCard = askForCardIndex(m_onTheTable.at(j).getCards());
+					Kaart kaart = m_onTheTable.at(j).popIndexed(selectedCard);
+					m_onTheTable.at(i).recieveCard(kaart);
+				}
+			}
+			doubles--;
 		}
 	}
 

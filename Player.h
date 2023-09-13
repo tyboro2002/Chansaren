@@ -27,4 +27,5 @@ public:
 	void recieveDeck(const Deck& deck);
 	void swapDecks(Player& other);
 	void killPlayer() { m_in_live = false; }
+	Kaart popIndexed(const int i) { return m_cards.popIndexed(i); }
 };

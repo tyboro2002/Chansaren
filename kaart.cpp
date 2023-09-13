@@ -171,6 +171,23 @@ Kaart& Deck::getCardAtIndex(const int index){
 }
 
 /*
+* return the card at the index and remove it from the deck
+*/
+Kaart Deck::popIndexed(int index) {
+	Deck temp;
+	while (index) {
+		temp.addCard(Kaart(m_cards.front()));
+		popFirst();
+		index--;
+	}
+	Kaart tempCard = Kaart(m_cards.front());
+	popFirst();
+	mergeFront(temp);
+	return tempCard;
+}
+
+
+/*
 * peek the card at the first index (dont remove it)
 */
 const Kaart& Deck::peekFirst() {
