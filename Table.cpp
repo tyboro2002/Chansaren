@@ -104,6 +104,34 @@ Table::Table(std::vector<string> names, const int number_of_decks = 1) {
 	}
 }
 
+/*
+* initiate a table with players
+*/
+Table::Table(std::vector<Player> spelers) {
+	m_playerCount = spelers.size();
+	m_players = spelers;
+	m_playingPlayer = 0;
+
+	std::vector<Player> tablePlayers;
+	for (const Player& player : spelers) {
+		// Create a new player with the same name and an empty deck
+		Player newPlayer = Player(player.getName());
+		// Add the new player to the new vector
+		tablePlayers.push_back(newPlayer);
+	}
+	m_onTheTable = tablePlayers;
+}
+
+/*
+* initiate a table with players
+* the onTheTable vector is for the cards on the table
+*/
+Table::Table(std::vector<Player> spelers, std::vector<Player> onTheTable) {
+	m_playerCount = spelers.size();
+	m_players = spelers;
+	m_playingPlayer = 0;
+	m_onTheTable = onTheTable;
+}
 
 /*
 * print a table to the outputstream

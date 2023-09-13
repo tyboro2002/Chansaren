@@ -42,7 +42,7 @@ Deck* Player::getCardsPointer() {
 /*
 * return the name of the player
 */
-std::string Player::getName() {
+std::string Player::getName() const {
 	return m_name;
 }
 

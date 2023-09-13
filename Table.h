@@ -15,6 +15,8 @@ class Table {
 public:
 	Table();
 	Table(std::vector<string> names, const int number_of_decks);
+	Table(std::vector<Player> spelers);
+	Table(std::vector<Player> spelers, std::vector<Player> onTheTable);
 	friend std::ostream& operator<<(std::ostream& os, const Table& table);
 	void stepTable(bool printTable);
 	void nextRound(bool printTable = true, int numberOfCards = 1);

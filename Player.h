@@ -16,7 +16,7 @@ public:
 	void resetComaCount() { m_comaRounds = 0; }
 	Deck& getCards();
 	Deck* getCardsPointer();
-	std::string getName();
+	std::string getName() const;
 	void clearCards();
 	Player(const string& m_name);
 	Player(const string& m_name, const Deck& m_cards);

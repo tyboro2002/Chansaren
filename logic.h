@@ -32,3 +32,4 @@ bool checkTripleSix(const Deck& deck);
 int askForCardIndex(const Deck& deck);
 int countValue(const Deck& deck, int value);
 int countValue(std::vector<Player>& players, int value);
+bool checkKingQueenRule(std::vector<Player>& players);

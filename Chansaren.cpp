@@ -4,10 +4,17 @@
 #include "Chansaren.h"
 #include "Table.h"
 #include "logic.h"
+#include "tests.h"
+
+#define RUN_TESTS 1 // Set to 1 to run tests, 0 to run the main program
 
 using namespace std;
 
 int main(){
+#if RUN_TESTS
+	TestRunner testRunner;
+	return testRunner.runAutomatedTestCases();
+#else
 	/*
 	Deck deck;
 	Kaart kaart = Kaart(ACE, Spades);
@@ -86,4 +93,5 @@ int main(){
 	}
 	*/
 	return 0;
+#endif
 }

@@ -243,3 +243,62 @@ int countValue(std::vector<Player>& players, int value) {
 	}
 	return am;
 }
+
+
+bool checkKingQueenRule(std::vector<Player>& players) {
+	for (size_t i = 0; i < players.size(); i++) {
+		Deck deck1 = players[i].getCards();
+
+		for (size_t j = i + 1; j < players.size(); j++) {
+			Deck deck2 = players[j].getCards();
+
+			bool kingInDeck1 = false;
+			bool queenInDeck2 = false;
+
+			for (int k = 0; k < deck1.numberOfCards(); k++) {
+				Kaart card = deck1.peekCardAtIndex(k);
+
+				if (card.getValue() == KING) {
+					kingInDeck1 = true;
+				}
+			}
+
+			for (int k = 0; k < deck2.numberOfCards(); k++) {
+				Kaart card = deck2.peekCardAtIndex(k);
+
+				if (card.getValue() == QUEEN) {
+					queenInDeck2 = true;
+				}
+			}
+
+			if (kingInDeck1 && queenInDeck2) {
+				return true;
+			}
+
+			bool queenInDeck1 = false;
+			bool kingInDeck2 = false;
+
+			for (int k = 0; k < deck1.numberOfCards(); k++) {
+				Kaart card = deck1.peekCardAtIndex(k);
+
+				if (card.getValue() == QUEEN) {
+					queenInDeck1 = true;
+				}
+			}
+
+			for (int k = 0; k < deck2.numberOfCards(); k++) {
+				Kaart card = deck2.peekCardAtIndex(k);
+
+				if (card.getValue() == KING) {
+					kingInDeck2 = true;
+				}
+			}
+
+			if (queenInDeck1 && kingInDeck2) {
+				return true;
+			}
+		}
+	}
+
+	return false; // Return false if no King and Queen in different decks were found
+}
