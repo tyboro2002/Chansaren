@@ -11,9 +11,9 @@
 * 3 zesen ==> alle personen dood van de andere personen
 * kleinst opeenvolgend ==> wine
 * enkel aas ==> zekere winst
+* dubbele ==> kaart
 * 
 * // not yet implemented
-* dubbele ==> kaart
 * heer en dame==> extra kaarte
 */
 
