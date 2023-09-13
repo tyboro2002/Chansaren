@@ -175,18 +175,14 @@ void loopDecks(std::vector<Player>& players, bool clockwise) {
 }
 
 /*
-* kill all cards that are Jack, Queen, King in all decks on the table except in yours
+* kill all cards that are Jack, Queen, King in all decks on the table
 */
-void killAlHumansOfOpponents(std::vector<Player>& players, int my_index) {
-	int i = 0;
+void killAllHumans(std::vector<Player>& players) {
 	for (Player& player : players) {
-		if (i != my_index) {
-			Deck& playerDeck = player.getCards();
-			playerDeck.filterValue(JACK);
-			playerDeck.filterValue(QUEEN);
-			playerDeck.filterValue(KING);
-		}
-		i++;
+		Deck& playerDeck = player.getCards();
+		playerDeck.filterValue(JACK);
+		playerDeck.filterValue(QUEEN);
+		playerDeck.filterValue(KING);
 	}
 }
 

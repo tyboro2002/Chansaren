@@ -46,8 +46,8 @@ int main(){
 
 		while (!table.checkGameOver()) {
 			cout << "round " << round++ << " started" << endl;
-			//table.stepTable(true);
-			table.nextRound(true, 3);
+			table.stepTable(true);
+			//table.nextRound(true, 3);
 		}
 		Player& winner = table.giveWinner();
 		cout << "the game is won by: " << winner.getName() << " this player has " << winner.getDeckSize() << " cards after " << round << " rounds" << endl;

@@ -212,7 +212,7 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 void Table::checkRules(int sevensNeeded) {
 	for (int i = 0; i < m_playerCount; i++) {
 		Deck& stapel = m_onTheTable.at(i).getCards();
-		if (checkTripleSix(stapel)) killAlHumansOfOpponents(m_onTheTable, i); //TODO make that when 2 players have 3 sixes that they both keep humans
+		if (checkTripleSix(stapel)) killAllHumans(m_onTheTable); //TODO make that when 2 players have 3 sixes that they both keep humans
 	}
 	if (checkMoreThanNSeven(m_onTheTable, sevensNeeded)) {
 		//useTwoSevens(m_onTheTable);

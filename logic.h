@@ -5,11 +5,11 @@
 
 /*
 * // implemented
-* 2==> verdubele
-* dubbele 7==> pakjes wiselen
+* 2 ==> verdubele
+* dubbele 7 ==> pakjes wiselen
 * zot ==> kaart bove pak
 * 3 zesen ==> alle personen dood van de andere personen
-* kleinst opeenvolgend==> wine
+* kleinst opeenvolgend ==> wine
 * enkel aas ==> zekere winst
 * 
 * // not yet implemented
@@ -27,7 +27,7 @@ int lowestVal(const Deck& deck);
 bool checkAllSingle(std::vector<Player> m_players);
 bool checkAllSingleAndFollowingUp(std::vector<Player> m_players);
 void loopDecks(std::vector<Player>& players, bool clockwise);
-void killAlHumansOfOpponents(std::vector<Player>& players, int my_index);
+void killAllHumans(std::vector<Player>& players);
 bool checkTripleSix(const Deck& deck);
 int askForCardIndex(const Deck& deck);
 int countValue(const Deck& deck, int value);
