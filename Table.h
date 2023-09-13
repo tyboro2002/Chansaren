@@ -18,15 +18,15 @@ public:
 	Table(std::vector<Player> spelers);
 	Table(std::vector<Player> spelers, std::vector<Player> onTheTable);
 	friend std::ostream& operator<<(std::ostream& os, const Table& table);
-	void stepTable(bool printTable);
-	void nextRound(bool printTable = true, int numberOfCards = 1);
+	void stepTable(bool printTable, bool full_automatic);
+	void nextRound(bool printTable = true, int numberOfCards = 1, bool full_automatic = false);
 	std::vector<Player>& getPlayers();
 	bool checkGameOver();
 	Player& giveWinner();
 private:
 	void checkForDeadPlayers();
 	void takeTopCardFromOpponents(int my_index);
-	int checkRules(int sevensNeeded = 2);
+	int checkRules(int sevensNeeded = 2, bool full_automatic = false);
 	const vector<int> checkWinner();
 	void letIndexedPlayersLayExtraCard(std::vector<int> indexes, int numberOfCards);
 };

@@ -155,7 +155,7 @@ std::ostream& operator<<(std::ostream& os, const Table& table) {
 /*
 * ask the players how many cards they want to be layed on the table this round and lays them on the table
 */
-void Table::stepTable(bool printTable = true) {
+void Table::stepTable(bool printTable, bool full_automatic) {
 	int numberOfCards = 0;
 	std::cout << "Enter number of cards: ";
 	std::cout.flush();
@@ -166,14 +166,14 @@ void Table::stepTable(bool printTable = true) {
 		std::cout << "Enter number of cards: ";
 		std::cout.flush();
 	}
-	nextRound(printTable, numberOfCards);
+	nextRound(printTable, numberOfCards, full_automatic);
 }
 
 /*
 * lays numberOfCards cards on the table for each player
 * when the player hasnt enough cards there just are less cards in his deck
 */
-void Table::nextRound(bool printTable, int numberOfCards) {
+void Table::nextRound(bool printTable, int numberOfCards, bool full_automatic) {
 	for (int i = 0; i < m_playerCount; i++) {
 		if (m_players.at(i).getLivingStatus()) {
 			Deck tempDeck;
@@ -185,7 +185,7 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 	if (printTable) std::cout << *this << endl;
 	int sevensNeeded = 2;
 	startOfTable:
-	sevensNeeded = checkRules(sevensNeeded);
+	sevensNeeded = checkRules(sevensNeeded, full_automatic);
 
 	if (printTable) std::cout << *this << endl;
 	vector<int> winnerIndexes = checkWinner();
@@ -227,7 +227,7 @@ void Table::nextRound(bool printTable, int numberOfCards) {
 * check the rules and ask and aply them until nothing more needed
 * returns the amount of sevensNeeded
 */
-int Table::checkRules(int sevensNeeded) {
+int Table::checkRules(int sevensNeeded, bool full_automatic) {
 	for (int i = 0; i < m_playerCount; i++) {
 		Deck& stapel = m_onTheTable.at(i).getCards();
 		if (checkTripleSix(stapel)) killAllHumans(m_onTheTable);
@@ -237,7 +237,7 @@ int Table::checkRules(int sevensNeeded) {
 		cout << "double seven occured looping the decks" << endl;
 		loopDecks(m_onTheTable, true);
 		loopDecks(m_players, true);
-		return checkRules(sevensNeeded+2);
+		return checkRules(sevensNeeded+2, full_automatic);
 	}
 	for (int i = 0; i < m_playerCount; i++) {
 		int unusedTwo = countNotUsedTwo(m_onTheTable.at(i).getCardsPointer());
@@ -248,7 +248,7 @@ int Table::checkRules(int sevensNeeded) {
 					if (m_players.at(i).getDeckSize() > 0) { // make a player only lay a extra card on the 2 when it has cards
 						tafelStapel->addCard(m_players.at(i).getCardsPointer()->popFirst());
 						tafelStapel->layCardOnIndex(tafelStapel->peekCardAtIndexNonConst(tafelStapel->numberOfCards() - 1), k);
-						return checkRules(sevensNeeded);
+						return checkRules(sevensNeeded, full_automatic);
 					}
 					break;
 				}
@@ -261,13 +261,25 @@ int Table::checkRules(int sevensNeeded) {
 			for (int j = 0; j < m_playerCount; j++) {
 				if (j != i) {
 					cout << m_onTheTable.at(j).getName() << " giving to: " << m_onTheTable.at(i).getName() << endl;
-					int selectedCard = askForCardIndex(m_onTheTable.at(j).getCards());
-					Kaart kaart = m_onTheTable.at(j).popIndexed(selectedCard);
-					m_onTheTable.at(i).recieveCard(kaart);
+					int selectedCard;
+					if (full_automatic) {
+						selectedCard = 0;
+					}
+					else {
+						selectedCard = askForCardIndex(m_onTheTable.at(j).getCards());
+					}
+					if (m_onTheTable.at(j).getDeckSize() > 0) {
+						Kaart kaart = m_onTheTable.at(j).popIndexed(selectedCard);
+						m_onTheTable.at(i).recieveCard(kaart);
+					}
 				}
 			}
 			doubles--;
 		}
+	}
+
+	if (checkKingQueenRule(m_onTheTable)) {
+		cout << "king queen rule found" << endl;
 	}
 
 	for (int i = 0; i < m_playerCount; i++) {
