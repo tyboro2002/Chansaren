@@ -7,7 +7,7 @@
 #include "tests.h"
 
 #define RUN_TESTS 0 // Set to 1 to run tests, 0 to run the main program
-#define FULL_AUTOMATIC 1 // set to 1 to do the full automatic game, 0 to 
+#define FULL_AUTOMATIC 0 // set to 1 to do the full automatic game, 0 to 
 
 #define PRINT_TABLE true
 #define FULL_AUTOMATIC_AMOUNT 3 // define how many cards are layed each round in full automatic mode

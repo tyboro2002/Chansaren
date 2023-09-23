@@ -1,6 +1,6 @@
 ﻿#include "Kaart.h"
 
-const std::vector<std::string> Kaart::unicode_chars{ "♠", "♥", "♣", "◆" };
+const std::vector<std::wstring> Kaart::unicode_chars{L"♠", L"♥", L"♣", L"◆"};
 
 /*
 * Assignment operator overload
@@ -20,16 +20,17 @@ Kaart& Kaart::operator=(const Kaart& other) {
 /*
 * print a card to the output stream
 */
-std::ostream& operator<<(std::ostream& os, const Kaart& kaart) { //TODO fix to print unicode chars
-	const std::vector<std::string> symbool{ "Spades","Hearts","Clubs","Diamonds", "Invalid"};
-	const std::vector<std::string> nummer{"Nothing","ACE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE","TEN","JACK","QUEEN","KING"};
-	os << symbool[kaart.m_symbol] << " " << nummer[kaart.m_value];
+std::wostream& operator<<(std::wostream& os, const Kaart& kaart) {
+	os << Kaart::unicode_chars[kaart.m_symbol] << L" " << kaart.m_value;
+
 	if (kaart.getValue() == NOTHING) {
-		std::cout << "ei da mag nie" << std::endl;
+		os << L" ei da mag nie" << std::endl;
 	}
+
 	if (kaart.isOnTopOfCard()) {
-		os << " has the Multiplier: " << kaart.getMultiplier();
+		os << L" has the Multiplier: " << kaart.getMultiplier();
 	}
+
 	return os;
 }
 
@@ -341,11 +342,11 @@ void Deck::splitDeckIntoNDecks(std::vector<Deck>* decks) {
 /*
 * print a deck to the output stream
 */
-std::ostream& operator<<(std::ostream& os, const Deck& deck) {
+std::wostream& operator<<(std::wostream& os, const Deck& deck) {
 	Kaart kaart;
 	for (int i = 0; i < deck.numberOfCards(); i++) {
 		kaart = deck.peekCardAtIndex(i);
-		os << kaart << std:: endl;
+		os << kaart << L"\n"; // Use L to denote wide string literals
 	}
 	return os;
 }

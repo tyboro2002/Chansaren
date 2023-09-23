@@ -51,7 +51,7 @@ public:
 	Kaart(Number number, Symbol symbol, Colour colour) : m_value(number), m_symbol(symbol), m_kleur(colour), m_multiplier(1) {}
 	~Kaart() {};
 	Kaart(const Kaart& other) : m_value(other.m_value), m_symbol(other.m_symbol), m_kleur(other.m_kleur), m_multiplier(other.m_multiplier)/*, m_used(other.m_used)*/ {}
-	friend std::ostream& operator<<(std::ostream& os, const Kaart& kaart);
+	friend std::wostream& operator<<(std::wostream& os, const Kaart& kaart);
 	bool operator==(const Kaart& other) const;
 	bool operator!=(const Kaart& other) const;
 	bool operator>(const Kaart& other) const;
@@ -60,7 +60,7 @@ public:
 	/*
 	* the symbols that will be printed with each card (corresponding symbol will be printed)
 	*/
-	static const std::vector<std::string> unicode_chars;
+	static const std::vector<std::wstring> unicode_chars;
 	const int getValue() const;
 	const int getMultiplier() const;
 	const Symbol getSymbol() const;
@@ -88,7 +88,7 @@ public:
 	}
 	//Deck(const Deck& other) : m_cards(other.m_cards) {}
 	Deck(Deck&& other) : m_cards(std::move(other.m_cards)) {}
-	friend std::ostream& operator<<(std::ostream& os, const Deck& deck);
+	friend std::wostream& operator<<(std::wostream& os, const Deck& deck);
 	static void full(Deck* fullDeck, int number_of_decks);
 	void addCard(const Kaart& card);
 	void clearDeck();

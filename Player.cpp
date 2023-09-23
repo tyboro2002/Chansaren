@@ -3,21 +3,23 @@
 /*
 * print a player to the outputstream
 */
-std::ostream& operator<<(std::ostream& os, const Player& player) {
-	os << "Player named: " << player.m_name << endl;
+std::wostream& operator<<(std::wostream& os, const Player& player) {
+	os << L"Player named: " << std::wstring(player.m_name.begin(), player.m_name.end()) << std::endl;
 	if (player.m_cards.numberOfCards() == 0) {
-		os << "has no cards";
-	}else {
-		os << "has " << player.m_cards.numberOfCards() << " cards: " << endl;
-		for (int i = 0; i < player.m_cards.numberOfCards() - 1; i++) {
-			os << player.m_cards.peekCardAtIndex(i) << endl;
-		}
-		os << player.m_cards.peekCardAtIndex(player.m_cards.numberOfCards()-1);
+		os << L"has no cards";
 	}
-	os << endl;
-	os << "has value: " << player.m_cards.calculateValue();
+	else {
+		os << L"has " << player.m_cards.numberOfCards() << L" cards:" << std::endl;
+		for (int i = 0; i < player.m_cards.numberOfCards() - 1; i++) {
+			os << player.m_cards.peekCardAtIndex(i) << std::endl;
+		}
+		os << player.m_cards.peekCardAtIndex(player.m_cards.numberOfCards() - 1);
+	}
+	os << std::endl;
+	os << L"has value: " << player.m_cards.calculateValue();
 	return os;
 }
+
 
 /*
 * returns the size of the players deck

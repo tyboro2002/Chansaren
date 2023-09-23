@@ -136,21 +136,29 @@ Table::Table(std::vector<Player> spelers, std::vector<Player> onTheTable) {
 /*
 * print a table to the outputstream
 */
-std::ostream& operator<<(std::ostream& os, const Table& table) {
-	os << "the table has " << table.m_playerCount << " players" << endl;
-	os << "the cards on the table are: " << endl;
-	for (int i = 0; i < table.m_onTheTable.size()-1;i++) {
-		os << "player has: " << table.m_players.at(i).getDeckSize() << " cards and player is ";
-		if (table.m_players.at(i).getLivingStatus()) os << "alive." << endl;
-		else os << "dead." << endl;
-		os << table.m_onTheTable.at(i) << endl << endl;
+std::wostream& operator<<(std::wostream& os, const Table& table) {
+	os << L"the table has " << table.m_playerCount << L" players" << std::endl;
+	os << L"the cards on the table are:" << std::endl;
+
+	for (int i = 0; i < table.m_onTheTable.size() - 1; i++) {
+		os << L"player has: " << table.m_players.at(i).getDeckSize() << L" cards and player is ";
+		if (table.m_players.at(i).getLivingStatus())
+			os << L"alive." << std::endl;
+		else
+			os << L"dead." << std::endl;
+		os << table.m_onTheTable.at(i) << std::endl << std::endl;
 	}
-	os << "player has: " << table.m_players.at(table.m_onTheTable.size() - 1).getDeckSize() << " cards and player is ";
-	if (table.m_players.at(table.m_players.size() - 1).getLivingStatus()) os << "alive." << endl;
-	else os << "dead." << endl;
+
+	os << L"player has: " << table.m_players.at(table.m_onTheTable.size() - 1).getDeckSize() << L" cards and player is ";
+	if (table.m_players.at(table.m_players.size() - 1).getLivingStatus())
+		os << L"alive." << std::endl;
+	else
+		os << L"dead." << std::endl;
 	os << table.m_onTheTable.at(table.m_onTheTable.size() - 1);
+
 	return os;
 }
+
 
 /*
 * ask the players how many cards they want to be layed on the table this round and lays them on the table
@@ -182,12 +190,12 @@ void Table::nextRound(bool printTable, int numberOfCards, bool full_automatic) {
 		}
 	}
 
-	if (printTable) std::cout << *this << endl;
+	if (printTable) std::wcout << *this << endl;
 	int sevensNeeded = 2;
 	startOfTable:
 	sevensNeeded = checkRules(sevensNeeded, full_automatic);
 
-	if (printTable) std::cout << *this << endl;
+	if (printTable) std::wcout << *this << endl;
 	vector<int> winnerIndexes = checkWinner();
 
 	if (winnerIndexes.size() == 1) {

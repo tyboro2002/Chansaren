@@ -17,7 +17,7 @@ public:
 	Table(std::vector<string> names, const int number_of_decks);
 	Table(std::vector<Player> spelers);
 	Table(std::vector<Player> spelers, std::vector<Player> onTheTable);
-	friend std::ostream& operator<<(std::ostream& os, const Table& table);
+	friend std::wostream& operator<<(std::wostream& os, const Table& table);
 	void stepTable(bool printTable, bool full_automatic);
 	void nextRound(bool printTable = true, int numberOfCards = 1, bool full_automatic = false);
 	std::vector<Player>& getPlayers();
