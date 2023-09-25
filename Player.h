@@ -1,10 +1,8 @@
 #pragma once
 #include "Kaart.h"
 
-using namespace std;
-
 class Player {
-	string m_name = "";
+	std::string m_name = "";
 	Deck m_cards;
 	bool m_in_live = true;
 	int m_comaRounds = 0;
@@ -18,8 +16,8 @@ public:
 	Deck* getCardsPointer();
 	std::string getName() const;
 	void clearCards();
-	Player(const string& m_name);
-	Player(const string& m_name, const Deck& m_cards);
+	Player(const std::string& m_name);
+	Player(const std::string& m_name, const Deck& m_cards);
 	friend std::ostream& operator<<(std::ostream& os, const Player& player);
 	void layNFirstCards(Deck& fullDeck, const int n);
 	void layNLastCards(Deck& fullDeck, const int n);

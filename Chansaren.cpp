@@ -5,19 +5,26 @@
 #include "Table.h"
 #include "logic.h"
 #include "tests.h"
+#include "GUIEngineGame.h"
 
 #define RUN_TESTS 0 // Set to 1 to run tests, 0 to run the main program
+#define UI 1 // set to 1 to use the better UI set to 0 to use cli
 #define FULL_AUTOMATIC 1 // set to 1 to do the full automatic game, 0 to 
 
 #define PRINT_TABLE true
 #define FULL_AUTOMATIC_AMOUNT 3 // define how many cards are layed each round in full automatic mode
 
-using namespace std;
-
 int main(){
 #if RUN_TESTS
 	TestRunner testRunner;
 	return testRunner.runAutomatedTestCases();
+#endif
+#if UI
+	ChansarenUI ui;
+	if (ui.Construct(150, 75, 1, 1, true))
+		ui.Start();
+
+	return 0;
 #else
 	/*
 	Deck deck;

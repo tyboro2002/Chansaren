@@ -205,9 +205,9 @@ bool checkTripleSix(const Deck& deck) {
 int askForCardIndex(const Deck& deck) {
 	int index;
 	for (int i = 0; i < deck.numberOfCards(); i++) {
-		cout << i << ") " << deck.peekCardAtIndex(i) << endl;
+		std::cout << i << ") " << deck.peekCardAtIndex(i) << std::endl;
 	}
-	cout << "what index do you want?: ";
+	std::cout << "what index do you want?: ";
 	std::cout.flush();
 	while (!(std::cin >> index) || index >= deck.numberOfCards() || index<0) {
 		std::cin.clear();

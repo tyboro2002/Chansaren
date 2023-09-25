@@ -88,9 +88,9 @@ Table::Table() {
 * initiate a table with players with the names given in the names vector
 * use number_of_decks decks (52 cards) to distribute
 */
-Table::Table(std::vector<string> names, const int number_of_decks = 1) {
+Table::Table(std::vector<std::string> names, const int number_of_decks = 1) {
 	m_playerCount = names.size();
-	for (string str : names) {
+	for (std::string str : names) {
 		Player speler = Player(str);
 		m_players.push_back(speler);
 		m_onTheTable.push_back(speler);
@@ -137,17 +137,17 @@ Table::Table(std::vector<Player> spelers, std::vector<Player> onTheTable) {
 * print a table to the outputstream
 */
 std::ostream& operator<<(std::ostream& os, const Table& table) {
-	os << "the table has " << table.m_playerCount << " players" << endl;
-	os << "the cards on the table are: " << endl;
+	os << "the table has " << table.m_playerCount << " players" << std::endl;
+	os << "the cards on the table are: " << std::endl;
 	for (int i = 0; i < table.m_onTheTable.size()-1;i++) {
 		os << "player has: " << table.m_players.at(i).getDeckSize() << " cards and player is ";
-		if (table.m_players.at(i).getLivingStatus()) os << "alive." << endl;
-		else os << "dead." << endl;
-		os << table.m_onTheTable.at(i) << endl << endl;
+		if (table.m_players.at(i).getLivingStatus()) os << "alive." << std::endl;
+		else os << "dead." << std::endl;
+		os << table.m_onTheTable.at(i) << std::endl << std::endl;
 	}
 	os << "player has: " << table.m_players.at(table.m_onTheTable.size() - 1).getDeckSize() << " cards and player is ";
-	if (table.m_players.at(table.m_players.size() - 1).getLivingStatus()) os << "alive." << endl;
-	else os << "dead." << endl;
+	if (table.m_players.at(table.m_players.size() - 1).getLivingStatus()) os << "alive." << std::endl;
+	else os << "dead." << std::endl;
 	os << table.m_onTheTable.at(table.m_onTheTable.size() - 1);
 	return os;
 }
@@ -182,16 +182,16 @@ void Table::nextRound(bool printTable, int numberOfCards, bool full_automatic) {
 		}
 	}
 
-	if (printTable) std::cout << *this << endl;
+	if (printTable) std::cout << *this << std::endl;
 	int sevensNeeded = 2;
 	startOfTable:
 	sevensNeeded = checkRules(sevensNeeded, full_automatic);
 
-	if (printTable) std::cout << *this << endl;
-	vector<int> winnerIndexes = checkWinner();
+	if (printTable) std::cout << *this << std::endl;
+	std::vector<int> winnerIndexes = checkWinner();
 
 	if (winnerIndexes.size() == 1) {
-		cout << "the player named: " << m_players.at(winnerIndexes.at(0)).getName() << " won this round." << endl << endl;
+		std::cout << "the player named: " << m_players.at(winnerIndexes.at(0)).getName() << " won this round." << std::endl << std::endl;
 		int winnerIndex = winnerIndexes.at(0);
 		Deck collected;
 		for (int i = 0; i < m_playerCount; i++) {
@@ -203,18 +203,18 @@ void Table::nextRound(bool printTable, int numberOfCards, bool full_automatic) {
 		}
 	}
 	else if (winnerIndexes.size() == 0) {
-		cout << "no winners found: " << endl;
+		std::cout << "no winners found: " << std::endl;
 		winnerIndexes = checkWinner();
-		cerr << "this is not suposed to happen" << endl;
-		cout << "TODO throw a nice error" << endl; //TODO this isnt suposed to happen so throw a nice error
+		std::cerr << "this is not suposed to happen" << std::endl;
+		std::cout << "TODO throw a nice error" << std::endl; //TODO this isnt suposed to happen so throw a nice error
 		for (int i = 0; i < m_playerCount; i++) {
 			m_onTheTable.at(i).clearCards();
 		}
 	}
 	else {
-		cout << "a draw occured between players: " << endl;
+		std::cout << "a draw occured between players: " << std::endl;
 		for (int index : winnerIndexes) {
-			cout << "player: " << m_players.at(index).getName() << endl;
+			std::cout << "player: " << m_players.at(index).getName() << std::endl;
 		}
 		letIndexedPlayersLayExtraCard(winnerIndexes, 1);
 		goto startOfTable;
@@ -234,7 +234,7 @@ int Table::checkRules(int sevensNeeded, bool full_automatic) {
 	}
 	if (checkMoreThanNSeven(m_onTheTable, sevensNeeded)) {
 		//useTwoSevens(m_onTheTable);
-		cout << "double seven occured looping the decks" << endl;
+		std::cout << "double seven occured looping the decks" << std::endl;
 		loopDecks(m_onTheTable, true);
 		loopDecks(m_players, true);
 		return checkRules(sevensNeeded+2, full_automatic);
@@ -260,7 +260,7 @@ int Table::checkRules(int sevensNeeded, bool full_automatic) {
 		while (doubles) {
 			for (int j = 0; j < m_playerCount; j++) {
 				if (j != i) {
-					cout << m_onTheTable.at(j).getName() << " giving to: " << m_onTheTable.at(i).getName() << endl;
+					std::cout << m_onTheTable.at(j).getName() << " giving to: " << m_onTheTable.at(i).getName() << std::endl;
 					int selectedCard;
 					if (full_automatic) {
 						selectedCard = 0;
@@ -279,7 +279,7 @@ int Table::checkRules(int sevensNeeded, bool full_automatic) {
 	}
 
 	if (checkKingQueenRule(m_onTheTable)) {
-		cout << "king queen rule found" << endl;
+		std::cout << "king queen rule found" << std::endl;
 	}
 
 	for (int i = 0; i < m_playerCount; i++) {
@@ -298,7 +298,7 @@ int Table::checkRules(int sevensNeeded, bool full_automatic) {
 /*
 * checks the index of the winning player(s)
 */
-const vector<int> Table::checkWinner() {
+const std::vector<int> Table::checkWinner() {
 	// TODO check for special winning rules
 	// (multiple consecutive players but of different lengths)
 
@@ -323,7 +323,7 @@ const vector<int> Table::checkWinner() {
 	cout << "ignoreValuesAce: " << ignoreValuesAce << endl;
 	cout << "singlesFolowing: " << singlesFolowing << endl;
 	*/
-	vector<int> winnerVector;
+	std::vector<int> winnerVector;
 	if (!(ignoreValuesAce || ignoreValuesCons || singlesFolowing)) {
 		for (int i = 0; i < m_playerCount; i++) {
 			int curVal = m_onTheTable.at(i).getCards().calculateValue();

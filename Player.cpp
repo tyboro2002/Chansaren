@@ -4,17 +4,17 @@
 * print a player to the outputstream
 */
 std::ostream& operator<<(std::ostream& os, const Player& player) {
-	os << "Player named: " << player.m_name << endl;
+	os << "Player named: " << player.m_name << std::endl;
 	if (player.m_cards.numberOfCards() == 0) {
 		os << "has no cards";
 	}else {
-		os << "has " << player.m_cards.numberOfCards() << " cards: " << endl;
+		os << "has " << player.m_cards.numberOfCards() << " cards: " << std::endl;
 		for (int i = 0; i < player.m_cards.numberOfCards() - 1; i++) {
-			os << player.m_cards.peekCardAtIndex(i) << endl;
+			os << player.m_cards.peekCardAtIndex(i) << std::endl;
 		}
 		os << player.m_cards.peekCardAtIndex(player.m_cards.numberOfCards()-1);
 	}
-	os << endl;
+	os << std::endl;
 	os << "has value: " << player.m_cards.calculateValue();
 	return os;
 }
@@ -56,7 +56,7 @@ void Player::clearCards() {
 /*
 * create a player without cards
 */
-Player::Player(const string& m_name){
+Player::Player(const std::string& m_name){
 	this->m_name = m_name;
 }
 
@@ -64,7 +64,7 @@ Player::Player(const string& m_name){
 /*
 * create a player with cards
 */
-Player::Player(const string& m_name, const Deck& m_cards) {
+Player::Player(const std::string& m_name, const Deck& m_cards) {
 	this->m_name = m_name;
 	this->m_cards = m_cards;
 }
